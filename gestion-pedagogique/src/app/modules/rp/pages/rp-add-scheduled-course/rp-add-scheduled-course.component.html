@@ -1,0 +1,79 @@
+<div
+  (click)="goBack()"
+  class="fixed flex justify-center items-center left-0 top-0 w-full h-full z-30 bg-[#000000c2]"
+>
+  <div class="card p-4 w-full max-w-md" (click)="$event.stopPropagation()">
+    <h3 class="text-[#392c7d] w-full font-semibold text-base uppercase py-2">
+      Add scheduled course
+    </h3>
+    <hr />
+    <form
+      [formGroup]="createScheduledCourseForm"
+      (submit)="onCreateScheduledCourse()"
+      class="flex flex-col gap-8 mt-4"
+    >
+      <div class="relative">
+        <select
+          formControlName="total_hours"
+          class="px-5 py-2 pl-8 w-full border border-[#babcbe] rounded-md outline-blue-500"
+        >
+          <option value="">Choose Total Hours</option>
+          <option value="10">10h</option>
+          <option value="20">20h</option>
+          <option value="30">30h</option>
+          <option value="40">40h</option>
+          <option value="50">50h</option>
+          <option value="60">60h</option>
+          <option value="70">70h</option>
+          <option value="80">80h</option>
+          <option value="90">90h</option>
+        </select>
+        <fa-icon
+          size="sm"
+          [icon]="icon.faHourglass"
+          class="absolute left-3 top-[50%] translate-y-[-50%] text-[#f66962]"
+        ></fa-icon>
+      </div>
+      <div class="flex-auto flex-shrink">
+        <select
+          formControlName="type"
+          class="px-5 py-2 pl-8 w-full border border-[#babcbe] rounded-md outline-blue-500"
+        >
+          <option value="">Choose type</option>
+          <option value="online">Online</option>
+          <option value="offline">Offline</option>
+        </select>
+      </div>
+      <div class="flex-auto relative flex-shrink">
+        <ng-select placeholder="Choose a professor" formControlName="user_id">
+          <ng-option
+            *ngFor="let professor of professors"
+            [value]="professor.id"
+            >{{ professor.displayName }}</ng-option
+          >
+        </ng-select>
+      </div>
+      <div class="flex-auto relative flex-shrink">
+        <ng-select placeholder="Choose a module" formControlName="module_id">
+          <ng-option *ngFor="let module of modules" [value]="module.id">{{
+            module.displayName
+          }}</ng-option>
+        </ng-select>
+      </div>
+      <div class="flex-auto relative flex-shrink">
+        <ng-select placeholder="Choose a classe" formControlName="classe_id">
+          <ng-option *ngFor="let classe of classes" [value]="classe.id">{{
+            classe.displayName
+          }}</ng-option>
+        </ng-select>
+      </div>
+      <button
+        [disabled]="!createScheduledCourseForm.valid"
+        type="submit"
+        class="px-6 py-2 border border-[#babcbe] rounded-lg outline-none bg-[#392c7d] disabled:bg-slate-300 text-white"
+      >
+        Create
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,172 @@
+<div class="flex flex-col gap-4 px-4">
+  <div class="card p-4">
+    <h3 class="text-[#392c7d] w-full font-semibold text-xl py-2">
+      School Year
+    </h3>
+    <p class="text-[#303030] mb-4">Manage school year.</p>
+    <hr />
+    <div class="flex justify-between mt-5">
+      <div class="relative">
+        <input
+          (input)="search($event)"
+          [value]="searchTerm"
+          (keydown)="onSearch($event)"
+          type="search"
+          placeholder="Search school year"
+          class="px-4 py-1 pl-10 border border-[#e9ecef] rounded-lg outline-none"
+        />
+        <fa-icon
+          size="sm"
+          [icon]="icon.faSearch"
+          class="absolute left-3 top-[50%] translate-y-[-50%] text-[#f66962]"
+        ></fa-icon>
+      </div>
+      <div>
+        <button
+          (click)="modal.showAddModal = true"
+          class="px-6 py-1 border border-[#e9ecef] rounded-lg outline-none bg-[#392c7d] text-white"
+        >
+          add
+        </button>
+      </div>
+    </div>
+    <table class="w-full mt-5">
+      <thead>
+        <tr>
+          <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">
+            <div class="flex items-center w-full h-full">
+              <input type="checkbox" class="w-4 h-4 mr-2" />
+            </div>
+          </th>
+          <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">School Year</th>
+          <th class="p-1 bg-[#f0f0f0] text-[#212529] text-right">Status</th>
+          <th class="p-1 bg-[#f0f0f0] text-[#212529] text-right pr-4">
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody *ngIf="!schoolYearService.fetching; else loader">
+        <tr
+          *ngFor="
+            let year of years
+              | paginate
+                : {
+                    itemsPerPage: pagination.itemsPerPage,
+                    currentPage: pagination.currentPage,
+                    totalItems: pagination.totalItems
+                  }
+          "
+          class="border-b border-gray-200 last:border-none"
+        >
+          <td class="text-[#22100d] py-4 px-1 text-left align-middle">
+            <div class="flex items-center w-full h-full">
+              <input type="checkbox" class="w-4 h-4 mr-2" />
+            </div>
+          </td>
+          <td class="text-[#22100d] py-4 px-1 l">{{ year.name }}</td>
+          <td class="text-[#22100d] py-4 px-1 text-right">
+            <span
+              *ngIf="year.status"
+              class="inline-block px-4 py-1 text-xs bg-green-500 text-center text-white rounded-lg max-w-[80px] w-full"
+              >active</span
+            >
+            <span
+              *ngIf="!year.status"
+              class="px-4 py-1 text-xs bg-red-500 text-white rounded-lg"
+              >unactive</span
+            >
+          </td>
+          <td class="text-[#22100d] py-4 px-1 text-right pr-4">
+            <span (click)="toggleActive(year.id, year.status)">
+              <fa-icon
+                *ngIf="year.status"
+                [icon]="icon.faToggleOn"
+                class="text-green-500 cursor-pointer pr-2"
+              ></fa-icon>
+              <fa-icon
+                *ngIf="!year.status"
+                [icon]="icon.faToggleOff"
+                class="text-red-500 cursor-pointer pr-2"
+              ></fa-icon>
+            </span>
+            <span (click)="deleteSchoolYear(year.id)">
+              <fa-icon
+                [icon]="icon.faRemove"
+                class="text-red-500 cursor-pointer"
+              ></fa-icon>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="flex p-2 justify-center items-center mt-4">
+      <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
+    </div>
+  </div>
+</div>
+
+<!-- skeleton -->
+<ng-template #loader>
+  <tbody>
+    <tr
+      *ngFor="let e of [].constructor(pagination.itemsPerPage)"
+      class="border-b border-gray-200 last:border-none"
+    >
+      <td class="align-middle h-[56.36px] px-1">
+        <span
+          class="inline-block animate-pulse w-4 h-[17px] rounded-sm bg-slate-500"
+        ></span>
+      </td>
+      <td class="align-middle h-[56.36px] px-1">
+        <span
+          class="inline-block animate-pulse w-20 h-[17px] rounded-sm bg-slate-500"
+        ></span>
+      </td>
+      <td class="align-middle h-[56.36px] px-1 text-right">
+        <span
+          class="inline-block animate-pulse w-20 h-[17px] rounded-sm bg-slate-500"
+        ></span>
+      </td>
+      <td class="align-middle h-[56.36px] px-1 text-right pr-4">
+        <span
+          class="inline-block animate-pulse w-12 h-[17px] rounded-sm bg-slate-500"
+        ></span>
+      </td>
+    </tr>
+  </tbody>
+</ng-template>
+
+<div
+  *ngIf="modal.showAddModal"
+  (click)="modal.showAddModal = false"
+  class="fixed flex justify-center items-center left-0 top-0 w-full h-full z-30 bg-[#000000c2]"
+>
+  <div class="card p-6 w-full max-w-xs" (click)="$event.stopPropagation()">
+    <h3 class="text-[#392c7d] w-full font-semibold text-base uppercase py-2">
+      Add school year.
+    </h3>
+    <hr />
+    <div class="flex flex-col gap-4 mt-4">
+      <div class="flex flex-col">
+        <label class="font-semibold text-sm mb-2" for="start_date">
+          Name
+          <span class="text-red-500">*</span>
+        </label>
+        <input
+          [(ngModel)]="year"
+          type="search"
+          placeholder="Enter name (ex. 2021-2022)"
+          class="px-4 py-2 border border-[#e9ecef] rounded-lg outline-none"
+        />
+      </div>
+      <button
+        [disabled]="year.length < 9"
+        (click)="addSchoolYear()"
+        type="submit"
+        class="px-6 py-2 border border-[#e9ecef] rounded-lg outline-none bg-[#392c7d] disabled:bg-slate-300 text-white"
+      >
+        Create
+      </button>
+    </div>
+  </div>
+</div>

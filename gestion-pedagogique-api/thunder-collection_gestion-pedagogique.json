@@ -1,0 +1,620 @@
+{
+    "info": {
+        "_postman_id": "4661e830-478c-4e8a-a71b-dcf949f3d48e",
+        "name": "gestion-pedagogique",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "school-years",
+            "item": [
+                {
+                    "name": "index",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://127.0.0.1:8000/api/school-years",
+                            "path": [
+                                "api",
+                                "school-years"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8000"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMzVkMmRkYjNlNGVjMjhlMWYwNWUwYjBlZTgyMjgzYzI4OWMxY2NjYTAzZGVkZDk5OGY1OTYyZjAyNmZmYjI1NjE2ODM2MGU2MGM2ZTE2Y2IiLCJpYXQiOjE2OTY1MzE3MDYuNTA0OTExLCJuYmYiOjE2OTY1MzE3MDYuNTA0OTE0LCJleHAiOjE3MjgxNTQxMDYuNDg4NzYzLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.W83mmfyMD10rnf1jdxHYFhWhCoPjs-zRNHYPu2Nxfv_VehlzFbgJV5wKDRtJIOIOyTwhyL2QkeyCtgdl_sDN9FA3s3HRi7JMukMaB184fiJFlPiRGKzssDDTyxsNGsOtyJO--fkcoORWd5AkC2ktVj_eLCrmpUW-zIz8g24Rpo_XwUSFCnyNekWJJ8-g9RfQzePjahsxMG3QuNXOyJDvads_H8sI3ffpbcIaBXC4uIZpMXeDkgAqwrwPtutDlneXNuaGwfroPIzqsvEBZ_aMmcJAfjvskL8Vl7bLhqMIkW1SWWE_0NBLQeLF-qrRMHq8Iva0fFmYEEFd8E0B1stHZ681rLgdvxmOYwywydD0UHxHg_w_ueaYt6p37hFjrULeRTQ2WoyY-jx1EWyuxDxGFFoQ22SDZh8t8pOSMEA2pHX2cKWfKdR--UrhQRLxr5coCyLTiqLhqGXs6Me47vgjHiwLoj0Oh_MuO4ZQ7okC4Gke9j6HZfUycOOi1UWu-KxMOv4IVqxlaNqEblzJsMK8gFpNgDzy5H-stPgs6RnvLvQlMs79Abbh5Mi8WsEmkx6mFBIhVDB52oXEuCJaea3oFMiBJnP7CrbPEVhNv-JWT-NvuTXDHZ2ez8LGUo54XuRAJte-hrt_zPXWR7cH5ZyxdBzYIXM7A1GqWhviBBq0J9k",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "show",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://127.0.0.1:8000/api/school-years/:id",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": ""
+                                }
+                            ],
+                            "path": [
+                                "api",
+                                "school-years",
+                                ":id"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8000"
+                        }
+                    }
+                },
+                {
+                    "name": "delete",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "http://127.0.0.1:8000/api/school-years/:id",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": ""
+                                }
+                            ],
+                            "path": [
+                                "api",
+                                "school-years",
+                                ":id"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8000"
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "store",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "http://127.0.0.1:8000/api/school-years",
+                            "path": [
+                                "api",
+                                "school-years"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8000"
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n    \"year\": \"2020-2021\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "update",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "http://127.0.0.1:8000/api/school-years/:id",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": ""
+                                }
+                            ],
+                            "path": [
+                                "api",
+                                "school-years",
+                                ":id"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8000"
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n    \"year\": \"2020-2022\"\n}"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "auth",
+            "item": [
+                {
+                    "name": "register",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "http://127.0.0.1:8000/api/auth/register",
+                            "path": [
+                                "api",
+                                "auth",
+                                "register"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8000"
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"name\": \"Jaco Coly\",\n  \"email\": \"jaco@gmail.com\",\n  \"password\": \"charo2002\",\n  \"password_confirmation\": \"charo2002\"\n}"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNmRjZDNhMzllMGNiZWI3OTBmMjdkYjFlM2E5NDdhNzYzMjk0ODA3OTUyMDNmZGM1OGFjNmIzZTVmZGNmMWRjZTc2NmU5NmQ4YWRhODFhOGIiLCJpYXQiOjE2OTY0MzMwNTAuMDA0MzU3LCJuYmYiOjE2OTY0MzMwNTAuMDA0MzYsImV4cCI6MTcyODA1NTQ0OS45OTAxMDcsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.Ss4tI2_5RSyUJJIFsFZC1isgACJnrHB1TEH1GiSJyneCB-ASPD4DYNFuiv_AwrkKEK83hV36Stsw30wSHWBROWhTETRCSljxaCsgt4_Kt_EowQU4f5iCX0TY3mNvS2T3fki4sysXrxlk4gBuimgcPkFWPThYS5w5MtSREuClFTupVW1dvwqEWOdTHS2ewaHxY9gFqG6H54deOkwWRbd_cshKKGVf4PHzrsN0PzdyygGMBWHkc7kh8PrdSHd8kr91Pc_hrCMNk7hFrc4iVZRdFUqj6joUVXoi5bnir9g9tK9EGbnZ4DTwBR5U0XSpLXMZ1FvCno3lEyXqLDngXFiaon6vDQQD3GPqXml4gtHZ9IZHUHeCO2cp9VAp4EDTAUFoCyknouN5Xl3S6ikOK26rffMlWG-pHk7YjG-_1suYybHtwNF9xK3odzU2BWXbf6728SAiVmf3q7IYkVQju-tY3preA3GtD4q3FNMIerr-Ixw_145zsjDi2rq6CDoOZriKpWXsP2KHHAt0FgwwqCevJqZsr6cg4HNUGU9nJ6nA-zLSWyECqibo1xsd28KeEZnLn2lkNfAkimR2HnTX1eLAa7tZUGHQvST2dH7ioVCi4E3CK-BU8YE81jGamRL-IJC471-V9QPLSYl4ioE1KEPuNfQ6-jBo_tIR7U60h9vj2x8",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "login",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "http://127.0.0.1:8000/api/auth/login",
+                            "path": [
+                                "api",
+                                "auth",
+                                "login"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8000"
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"email\": \"rp@example.com\",\n  \"password\": \"password\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "me",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://127.0.0.1:8000/api/auth/me",
+                            "path": [
+                                "api",
+                                "auth",
+                                "me"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8000"
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNGY3ZGQ4YjQyMzcwMDdiZmUyMGMzMDBjNWY0MDBmZTBiMjM4YWM2ODMyZjA3NzJiZmNkYzliMzA5ZGI0NWVjNTljY2I5OTJiNTNmNDIyY2YiLCJpYXQiOjE2OTY2MDY1OTQuMDYzMjA0LCJuYmYiOjE2OTY2MDY1OTQuMDYzMjA2LCJleHAiOjE3MjgyMjg5OTQuMDQ3ODg0LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.IFxZ5jSBZl4y8D8jmVyjrxm-qnrpcBajjuWS5PoiSvOXeHHNh-FcdnEPHjq-0CavDRjUpyYPHwt7hnAtw9d7wDrNffWOEJViF3bqKWY4m5omlc4m6dvpovh471sV56ZC5Q__Ym7esxL8KQhZRpkS0AJjXI_ynfuOMIKjW4jmyzWUZwvYEMNFEfeyjQqXZPI3OGhgP78M_qaNnf1iY04TawxCZA9abMwT7yUs6t4CQDY_keSQUglyZjMdxfBCu0zAilx4mx1VOKlJ7MhSmZvevoHaG_Q51tTplhCKWWWfIo9Tge4ZCYUyrCeB2EME14xa6aez2CqAvil568y3XW7JUH-Fc_FxsbqMuIFUoxRoLyOJJ1ia0YtWo9qlMsitZVllTFtzMKiqDWfslgvS7KJgGncS42pVEMrdlRPNh0_OwvRgpSP3RVtoZ0Ll2IN9YCmw1mepRb5eEjXgy_l4dONrM4HAhTS9q7kbCjL7ZpvUYWxkOrlBUE8lDQ3YdDSC79Xiv_iOok5jR6LW-m81ubXlSOmU8iPVhF_Q8mjyCsX7k3krSHo0kz6rgL5ALcDq6O5HY1XFjzOr2EyqD0hwqtF6tm1jo6dTiuf3r8DsIC8_n26KuZe3MJTMl4gjz169pnD2GNwjmwr1K01iy5tmtCw5MPv4HVtC3SDeMiVEQ4dFfy",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "school-levels",
+            "item": [
+                {
+                    "name": "index",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://127.0.0.1:8000/api/school-levels",
+                            "path": [
+                                "api",
+                                "school-levels"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8000"
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMzVkMmRkYjNlNGVjMjhlMWYwNWUwYjBlZTgyMjgzYzI4OWMxY2NjYTAzZGVkZDk5OGY1OTYyZjAyNmZmYjI1NjE2ODM2MGU2MGM2ZTE2Y2IiLCJpYXQiOjE2OTY1MzE3MDYuNTA0OTExLCJuYmYiOjE2OTY1MzE3MDYuNTA0OTE0LCJleHAiOjE3MjgxNTQxMDYuNDg4NzYzLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.W83mmfyMD10rnf1jdxHYFhWhCoPjs-zRNHYPu2Nxfv_VehlzFbgJV5wKDRtJIOIOyTwhyL2QkeyCtgdl_sDN9FA3s3HRi7JMukMaB184fiJFlPiRGKzssDDTyxsNGsOtyJO--fkcoORWd5AkC2ktVj_eLCrmpUW-zIz8g24Rpo_XwUSFCnyNekWJJ8-g9RfQzePjahsxMG3QuNXOyJDvads_H8sI3ffpbcIaBXC4uIZpMXeDkgAqwrwPtutDlneXNuaGwfroPIzqsvEBZ_aMmcJAfjvskL8Vl7bLhqMIkW1SWWE_0NBLQeLF-qrRMHq8Iva0fFmYEEFd8E0B1stHZ681rLgdvxmOYwywydD0UHxHg_w_ueaYt6p37hFjrULeRTQ2WoyY-jx1EWyuxDxGFFoQ22SDZh8t8pOSMEA2pHX2cKWfKdR--UrhQRLxr5coCyLTiqLhqGXs6Me47vgjHiwLoj0Oh_MuO4ZQ7okC4Gke9j6HZfUycOOi1UWu-KxMOv4IVqxlaNqEblzJsMK8gFpNgDzy5H-stPgs6RnvLvQlMs79Abbh5Mi8WsEmkx6mFBIhVDB52oXEuCJaea3oFMiBJnP7CrbPEVhNv-JWT-NvuTXDHZ2ez8LGUo54XuRAJte-hrt_zPXWR7cH5ZyxdBzYIXM7A1GqWhviBBq0J9k",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "field-of-studies",
+            "item": [
+                {
+                    "name": "index",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://127.0.0.1:8000/api/field-of-studies",
+                            "path": [
+                                "api",
+                                "field-of-studies"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8000"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMzVkMmRkYjNlNGVjMjhlMWYwNWUwYjBlZTgyMjgzYzI4OWMxY2NjYTAzZGVkZDk5OGY1OTYyZjAyNmZmYjI1NjE2ODM2MGU2MGM2ZTE2Y2IiLCJpYXQiOjE2OTY1MzE3MDYuNTA0OTExLCJuYmYiOjE2OTY1MzE3MDYuNTA0OTE0LCJleHAiOjE3MjgxNTQxMDYuNDg4NzYzLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.W83mmfyMD10rnf1jdxHYFhWhCoPjs-zRNHYPu2Nxfv_VehlzFbgJV5wKDRtJIOIOyTwhyL2QkeyCtgdl_sDN9FA3s3HRi7JMukMaB184fiJFlPiRGKzssDDTyxsNGsOtyJO--fkcoORWd5AkC2ktVj_eLCrmpUW-zIz8g24Rpo_XwUSFCnyNekWJJ8-g9RfQzePjahsxMG3QuNXOyJDvads_H8sI3ffpbcIaBXC4uIZpMXeDkgAqwrwPtutDlneXNuaGwfroPIzqsvEBZ_aMmcJAfjvskL8Vl7bLhqMIkW1SWWE_0NBLQeLF-qrRMHq8Iva0fFmYEEFd8E0B1stHZ681rLgdvxmOYwywydD0UHxHg_w_ueaYt6p37hFjrULeRTQ2WoyY-jx1EWyuxDxGFFoQ22SDZh8t8pOSMEA2pHX2cKWfKdR--UrhQRLxr5coCyLTiqLhqGXs6Me47vgjHiwLoj0Oh_MuO4ZQ7okC4Gke9j6HZfUycOOi1UWu-KxMOv4IVqxlaNqEblzJsMK8gFpNgDzy5H-stPgs6RnvLvQlMs79Abbh5Mi8WsEmkx6mFBIhVDB52oXEuCJaea3oFMiBJnP7CrbPEVhNv-JWT-NvuTXDHZ2ez8LGUo54XuRAJte-hrt_zPXWR7cH5ZyxdBzYIXM7A1GqWhviBBq0J9k",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "semesters",
+            "item": [
+                {
+                    "name": "index",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://127.0.0.1:8000/api/semesters",
+                            "path": [
+                                "api",
+                                "semesters"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8000"
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYWJiYmJkZjQ0Zjg1ZjNiNjNjNjFjN2Q0OGZlNTk4ZGNlMmE3NDNjZGVhMGZlYmMyZDJkYmQ5ZjdlMjk1ZjAzNDgwOTkxMjMxMmY4OWNhZWUiLCJpYXQiOjE2OTY1OTU3MDAuMjI5NTU1LCJuYmYiOjE2OTY1OTU3MDAuMjI5NTU3LCJleHAiOjE3MjgyMTgxMDAuMTMyNzA3LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.oZALAgIH8lVP-A75fJc6QzaddFFjCe1QjrZ5rSXY1ZKP71mLF1_GPg7cP3UT9kcSpKUxbicStT0lA8yTG-mRTINYy-sCoXI3SXzWtpTIAlCdJMrNnGO-eTS3wOTINKIgwX9idrtP8CE0R8Z4nK66xGdTHqCrJAK3lk6FzOlmkdPSPMFXaT65DFt7wJhewgBXWOATf-nGmeMmWSojn7cVA8Y1Inu_CSWu1GdkTAs7GbduZ2tmaoQZr3b4wxak0jQ-iTVljZqMXFHJO_HGEG9q8eZzq4LX4h2PG_BDGcuhcojYNA_Y3tORkzBAGo1TmA3MFpjZ6wEph-yJZ1suLDmqpIqJsjBCl4yYMjah_1VpswwErw-y74tizL66uZ-3qGUHo7vfMDuufH2j5vuBmeCy_xbrDSEukMYXWhvvcll7XV7E8R0Zn0CMmWBqSAk2AK-rZH5r30HgYJOJ5ZIDgew7gD6n3C1-3WBwVyMfOLubEaej-C_JES82baKn6XBFE0qgWeDbB0BQyN2SKv79Ha0srDxys0sU23b4lvbJupbHTO5Wyj9ArYfIfkKuYDKVEHgc4nBigpynoH3l0AHWZjv1ZpTL1e-vd6yrRfd6dokfm5htMpKS4P3xUwcyNCCv2FlZ6evJYnaKgy02PTAta37LCyBtcuzFwDG_NMKpdSpan14",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "classes",
+            "item": [
+                {
+                    "name": "index",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://127.0.0.1:8000/api/classes?sy=3",
+                            "query": [
+                                {
+                                    "key": "sy",
+                                    "value": "3"
+                                }
+                            ],
+                            "variable": [],
+                            "path": [
+                                "api",
+                                "classes"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8000"
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiODE3YzQ2MmZhNDhkZWJlZTcyYjViZGI4M2Q0Zjc2NWQ0MTdiMjZjZGRkYWEzY2IwZGQ5ODAwZjExYjkzMGJmMTY2ZDlkYzcyZjE2NWM0MWEiLCJpYXQiOjE2OTY1OTczMDMuMzM0ODUzLCJuYmYiOjE2OTY1OTczMDMuMzM0ODU2LCJleHAiOjE3MjgyMTk3MDMuMzI1NzU4LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.e0DTxNBdBPcBOeHQt4ad71l7ioq4Fvy5khGtl_dqf8gFuJDw_O15-3WEC0cq1BfFiwwkJlEK26_yl3B5RG5UVWGbBfqeqETiuWOP04deh6I5CK5BR5vxg6cfhCcK2FJswHIRR6etvFksema7HgnW1hVOePxgVCWuEexTtToJtJFVwjJqYfr_g8BKHmM_570KcfjWZQJUbBQD8no6bdkV2nRbyImCUQmbzOL6dEcm8RN37Z7iE1IUTYf7Wo9Nnl_z4NP39xTCOyjwcFJQg4Dt3QZs03CTQcTRMFOi0Zm6XRT2O08FR6gzbLAo4MU3ZWa1X1bCWOEck2xJJyJF06QOhdZPPgzSFviQipt3H6gDuo6CZRFK_S9fX8u_i1QAoeWGEpkUScrYcVtrsmaq5ApIIRZ-T7qlSrA7AUcp1-U6Cj-XL1Xv9y35DC7rR4aZT1XkxZkp2lvG4HCjXHk7z41_usVL0opsc_unqZcJyXVADTnf_P0lqXejPIhX6QK9HS7htGB-Qos1Fwiu6DWLZFzIdSxgftv_lrh1HgqXzzHImFbLUf5tQsWKpCskAcLA4uXiRrbxbR_WbhrXsQdcyB39UYuimRgmpRb21SMNEZl6NJQb4bN8A434QaM_3wSgj0a_VNneuArhuWdOJ_-sMCgPdluVeJ5nSk8L-zPy-afYKFg",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "modules",
+            "item": [
+                {
+                    "name": "index",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://127.0.0.1:8000/api/modules",
+                            "path": [
+                                "api",
+                                "modules"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8000"
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYzJhN2JhZTA1YjJiNjMxYjM3ZGU4NTVmYjZkYmEwNmQ5NmRmYTFkNDgzMTdiNWMzMjM3NjgwYzllNGQ3ZGE1ZDM2ODMyMDE4MmU1YzQ3NTkiLCJpYXQiOjE2OTY2MDA0NzEuNDYzNjQsIm5iZiI6MTY5NjYwMDQ3MS40NjM2NDIsImV4cCI6MTcyODIyMjg3MS40NDk1MzgsInN1YiI6IjIiLCJzY29wZXMiOltdfQ.GVhUzwiV1cYMZwbKZPhEm-d4s4bcAwyH4vDw_fWeRS4YJqmFYB-ZR-DZp04yQRlvG9Uda50CAYpvjjhim7X36VaTICHoUsPEnkUZFasAUWZWglDLS9JWQc2a5XdIv91ZY8Qe6gMxAhGOCEkHCj9sySDcQTK2fJS41GPy_oMR88tjtUs9Z2ERD2Aoy1Fd1Jot-w1oQh62unlZzYCjpwpSnO0euiJFA7hEYJ5KZXqfw1S6Ku363JdGCr2DHxZorcMkFtEuEH7RTzkc7Yb2t0p5nRdmOLoyXML6vZclcfVC2g0KYC2NOPDiOY53OOQyes4sHZu6CfZXSyvnjtjReLggtNakuQQqfyjojm7lcbc3K9KBdN39spRt-UVrGSAMd7Ez-sI5ZJRNXgTdLH2wBT_1m2yuVa6yGjglmigGXKrQqAnp_uRw50sewT00MiSs2f-bczbhv69mduMi5vmEtkYoMPTHnmZTXusA2hKLEh9LiBRTJqJWb3_2OiKUVc8h4wFbEg28p3nxBMVKHQCcKmMXIHQw5T5NOiNeGItw6QbeVIOJATE1TT7ghJMVe2yR-3aSRpQ8FALimyUi8qkZ_CZw1T22THcXfvHO965lJXMJBG9gssl-jtSfUQ8X_niyKTxLoLmiQ1b0TaYFJ9Le8rgFcMD9wWi4IVGErF2Gxe5D4w8",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "scheduled-courses",
+            "item": [
+                {
+                    "name": "index",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://127.0.0.1:8000/api/scheduled-courses",
+                            "path": [
+                                "api",
+                                "scheduled-courses"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8000"
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOWFkMjA0MmI4NjUzNjgzMTljMThmZjgxZDhjNzc3YjQxODIzYzE1YzgxOTAzNTBlZDhhZmM1Mjg2MThlMDQ2YTA4ZjgzNzYxNGYyZTRlMDQiLCJpYXQiOjE2OTY2MDc4NzcuMzU1NTc4LCJuYmYiOjE2OTY2MDc4NzcuMzU1NTgsImV4cCI6MTcyODIzMDI3Ny4zNDUzMjQsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.hMs64cACQCdZ-jlyrahCmTblFyj9M2ivzOsVpUIIQn6A3hpT7ziDp11ClO3-UfFH5lSGIc6boZt0utBhAfwFSvRJgcWTnU3xLRFdC-dXNR-yQvXJUX6RpbAW1vpcutP5tc2bdlsdsYKR2tgEvjHsyGenjB7ZEPSN7FFrVg2JJ7keJg7PiISXLhyiBX165bVxRRb-nwApCp9nN_gWiU5fkqP0wVrIrSRYIE44mMjX8cEkDZtxtZfQ4POljVKOGdwVOp_RiQWUas8j1lnc1tALvtHW-079kwcgRBkzjgaBvspFBnDTZ9M4zR108NTUb8dSx4pXf-jfmqnOupSiv_wE3T6bCZfxKfN-YhEuS1m_BDsE_LUZZQOVHAUIlCrn7OgOlhXLDTMp4gHew00F5dD6UxgQQ0MPVibKo27JYJmL_FV_K5BJVgt3aejZmuB8NYeK6lew188SvnvvNAWzRViiRcCNlQUIYuUSG-3ta3vF6auXJLdjfPPnZyrCc8j4k7hG9nq6InWI_82KNUXyLsFIZjm2n6OtFztPE2h-jsYpbKuBHS8tK98HTxpMGBraHYJiKzZNoOY1eOPI8nHA5j79Zo4V7KSEjyzbc6O8_9qTiQkg4-UiA3n8meun5umwHQz1gm_uZPlVHZryOKaao74Ul4SInyEPcfJlxQw066K7o-8",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "store",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "http://127.0.0.1:8000/api/scheduled-courses",
+                            "path": [
+                                "api",
+                                "scheduled-courses"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8000"
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"total_hours\": \"10\",\n  \"type\": \"offline\",\n  \"module_id\": 7,\n  \"user_id\": 2,\n  \"classe_id\": 4\n}"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOWFkMjA0MmI4NjUzNjgzMTljMThmZjgxZDhjNzc3YjQxODIzYzE1YzgxOTAzNTBlZDhhZmM1Mjg2MThlMDQ2YTA4ZjgzNzYxNGYyZTRlMDQiLCJpYXQiOjE2OTY2MDc4NzcuMzU1NTc4LCJuYmYiOjE2OTY2MDc4NzcuMzU1NTgsImV4cCI6MTcyODIzMDI3Ny4zNDUzMjQsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.hMs64cACQCdZ-jlyrahCmTblFyj9M2ivzOsVpUIIQn6A3hpT7ziDp11ClO3-UfFH5lSGIc6boZt0utBhAfwFSvRJgcWTnU3xLRFdC-dXNR-yQvXJUX6RpbAW1vpcutP5tc2bdlsdsYKR2tgEvjHsyGenjB7ZEPSN7FFrVg2JJ7keJg7PiISXLhyiBX165bVxRRb-nwApCp9nN_gWiU5fkqP0wVrIrSRYIE44mMjX8cEkDZtxtZfQ4POljVKOGdwVOp_RiQWUas8j1lnc1tALvtHW-079kwcgRBkzjgaBvspFBnDTZ9M4zR108NTUb8dSx4pXf-jfmqnOupSiv_wE3T6bCZfxKfN-YhEuS1m_BDsE_LUZZQOVHAUIlCrn7OgOlhXLDTMp4gHew00F5dD6UxgQQ0MPVibKo27JYJmL_FV_K5BJVgt3aejZmuB8NYeK6lew188SvnvvNAWzRViiRcCNlQUIYuUSG-3ta3vF6auXJLdjfPPnZyrCc8j4k7hG9nq6InWI_82KNUXyLsFIZjm2n6OtFztPE2h-jsYpbKuBHS8tK98HTxpMGBraHYJiKzZNoOY1eOPI8nHA5j79Zo4V7KSEjyzbc6O8_9qTiQkg4-UiA3n8meun5umwHQz1gm_uZPlVHZryOKaao74Ul4SInyEPcfJlxQw066K7o-8",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "session-courses",
+            "item": []
+        }
+    ]
+}

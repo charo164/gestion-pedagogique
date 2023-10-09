@@ -1,0 +1,143 @@
+<div class="card p-4 mx-4">
+  <h3 class="text-[#392c7d] w-full font-semibold text-xl py-2">
+    Scheduled courses
+  </h3>
+  <p class="text-[#303030] mb-4">Manage scheduled courses.</p>
+  <hr />
+  <div class="flex justify-between mt-5">
+    <div class="relative">
+      <input
+        (keydown)="onSearch($event)"
+        (input)="search($event)"
+        [value]="searchTerm"
+        type="search"
+        placeholder="Search classe"
+        class="px-5 py-2 pl-10 border border-[#babcbe] rounded-lg outline-none"
+      />
+      <fa-icon
+        size="sm"
+        [icon]="icon.faSearch"
+        class="absolute left-3 top-[50%] translate-y-[-50%] text-[#f66962]"
+      ></fa-icon>
+    </div>
+    <div>
+      <a
+        [routerLink]="'/rp/scheduled-course/create'"
+        class="px-6 py-2 border border-[#babcbe] rounded-lg outline-none bg-[#392c7d] text-white"
+      >
+        add
+      </a>
+    </div>
+  </div>
+  <table class="w-full mt-5">
+    <thead>
+      <tr>
+        <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">
+          <div class="flex items-center w-full h-full">
+            <input type="checkbox" class="w-4 h-4 mr-2" />
+          </div>
+        </th>
+        <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">Module</th>
+        <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">Professor</th>
+        <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">Classe</th>
+        <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">Type</th>
+        <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">Hours</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="!scheduledCourseService.fetching; else loader">
+      <tr
+        *ngFor="
+          let scheduledCourse of scheduledCourses
+            | paginate
+              : {
+                  itemsPerPage: pagination.itemsPerPage,
+                  currentPage: pagination.currentPage,
+                  totalItems: pagination.totalItems
+                }
+        "
+        class="border-b border-gray-200 last:border-none"
+      >
+        <td class="text-[#22100d] py-4 px-1 text-left align-middle">
+          <div class="flex items-center w-full h-full">
+            <input type="checkbox" class="w-4 h-4 mr-2" />
+          </div>
+        </td>
+        <td class="text-[#22100d] py-4 px-1 text-left">
+          <div class="flex items-center w-full h-full">
+            <span class="inline-block">
+              {{ scheduledCourse.module }}
+            </span>
+          </div>
+        </td>
+        <td class="text-[#22100d] py-4 px-1 text-left">
+          {{ scheduledCourse.user }}
+        </td>
+        <td class="text-[#22100d] py-4 px-1 text-left">
+          {{ scheduledCourse.classe }}
+        </td>
+        <td class="text-[#22100d] py-4 px-1 text-left">
+          <span
+            *ngIf="scheduledCourse.type == 'online'"
+            class="inline-block px-5 py-2 text-xs bg-green-500 text-center text-white rounded-lg max-w-[80px] w-full"
+            >online</span
+          >
+          <span
+            *ngIf="scheduledCourse.type == 'offline'"
+            class="px-5 py-2 text-xs bg-red-500 text-white rounded-lg"
+            >offline</span
+          >
+        </td>
+        <td class="text-[#22100d] py-4 px-1 text-left">
+          {{ scheduledCourse.scheduled_hours || 0 | number : "1.0-2" }}h /
+          {{ scheduledCourse.total_hours }}h
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="flex p-2 justify-center items-center mt-4">
+    <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
+  </div>
+</div>
+
+<!-- skeleton -->
+<ng-template #loader>
+  <tbody>
+    <tr
+      *ngFor="let e of [].constructor(pagination.itemsPerPage)"
+      class="border-b border-gray-200 last:border-none"
+    >
+      <td class="align-middle h-[56.36px] px-1">
+        <span
+          class="inline-block animate-pulse w-4 h-[17px] rounded-sm bg-slate-500"
+        ></span>
+      </td>
+      <td class="align-middle h-[56.36px] px-1">
+        <span
+          class="inline-block animate-pulse w-32 h-[17px] rounded-sm bg-slate-500"
+        ></span>
+      </td>
+      <td class="align-middle h-[56.36px] px-1 text-left">
+        <span
+          class="inline-block animate-pulse w-32 h-[17px] rounded-sm bg-slate-500"
+        ></span>
+      </td>
+      <td class="align-middle h-[56.36px] px-1 text-left">
+        <span
+          class="inline-block animate-pulse w-8 h-[17px] rounded-sm bg-slate-500"
+        ></span>
+      </td>
+      <td class="align-middle h-[56.36px] px-1 text-left">
+        <span
+          class="inline-block animate-pulse w-8 h-[17px] rounded-sm bg-slate-500"
+        ></span>
+      </td>
+      <td class="align-middle h-[56.36px] px-1 text-left">
+        <span
+          class="inline-block animate-pulse w-10 h-[17px] rounded-sm bg-slate-500"
+        ></span>
+      </td>
+    </tr>
+  </tbody>
+</ng-template>
+
+<router-outlet></router-outlet>

@@ -1,0 +1,151 @@
+<div class="mx-4">
+  <div class="flex justify-between mb-4">
+    <div class="card p-3">
+      <div class="flex justify-between">
+        <ng-select
+          (change)="onClassroomChange($event)"
+          class="custom-select"
+          placeholder="Filter by classroom"
+        >
+          <ng-option
+            *ngFor="let classroom of classrooms"
+            [value]="classroom.id"
+            >{{ classroom.displayName }}</ng-option
+          >
+        </ng-select>
+        <ng-select
+          (change)="onProfessorChange($event)"
+          class="custom-select"
+          placeholder="Filter by professor"
+        >
+          <ng-option
+            *ngFor="let professor of professors"
+            [value]="professor.id"
+            >{{ professor.displayName }}</ng-option
+          >
+        </ng-select>
+      </div>
+    </div>
+    <div class="card p-3">
+      <a
+        [routerLink]="['/rp/session-course/create']"
+        class="flex gap-2 px-3 py-2 text-white bg-[#392c7d] rounded-lg cursor-pointer border border-[#1e1e1e] overflow-hidden"
+      >
+        <fa-icon [icon]="icons.faCalendarDays"></fa-icon>
+        New une session
+      </a>
+    </div>
+  </div>
+  <div class="card px-4 py-4 relative overflow-hidden">
+    <div
+      *ngIf="sessionCourseService.fetching"
+      class="absolute animate-pulse flex justify-center items-center w-full h-full left-0 top-0 bg-[#000000bd]"
+    ></div>
+    <div class="flex justify-between items-center">
+      <div class="">
+        <div
+          class="flex text-white bg-[#392c7d] rounded-lg cursor-pointer border border-[#1e1e1e] overflow-hidden"
+        >
+          <div
+            class="py-2 px-3"
+            mwlCalendarPreviousView
+            [view]="view"
+            [(viewDate)]="viewDate"
+            (viewDateChange)="closeOpenMonthViewDay()"
+          >
+            Previous
+          </div>
+          <div
+            class="py-2 px-3 bg-white text-black"
+            mwlCalendarToday
+            [(viewDate)]="viewDate"
+          >
+            Today
+          </div>
+          <div
+            class="py-2 px-3"
+            mwlCalendarNextView
+            [view]="view"
+            [(viewDate)]="viewDate"
+            (viewDateChange)="closeOpenMonthViewDay()"
+          >
+            Next
+          </div>
+        </div>
+      </div>
+      <div class=""></div>
+      <div class="text-xl font-semibold text-[#22100d]">
+        <h3>{{ viewDate | calendarDate : view + "ViewTitle" : "en" }}</h3>
+      </div>
+      <div class="">
+        <div
+          class="flex text-white bg-[#392c7d] rounded-lg cursor-pointer border border-[#1e1e1e] overflow-hidden"
+        >
+          <div
+            [class]="
+              '' +
+              (view === CalendarView.Month ? 'bg-[#291e58]' : '') +
+              ' py-2 px-3'
+            "
+            (click)="setView(CalendarView.Month)"
+            [class.active]=""
+          >
+            Month
+          </div>
+          <div
+            [class]="
+              '' +
+              (view === CalendarView.Week ? 'bg-[#291e58]' : '') +
+              ' py-2 px-3'
+            "
+            (click)="setView(CalendarView.Week)"
+            [class.active]="view === CalendarView.Week"
+          >
+            Week
+          </div>
+          <div
+            [class]="
+              '' +
+              (view === CalendarView.Day ? 'bg-[#291e58]' : '') +
+              ' py-2 px-3'
+            "
+            (click)="setView(CalendarView.Day)"
+            [class.active]="view === CalendarView.Day"
+          >
+            Day
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div [ngSwitch]="view">
+      <mwl-calendar-month-view
+        *ngSwitchCase="CalendarView.Month"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        [activeDayIsOpen]="activeDayIsOpen"
+        (dayClicked)="dayClicked($event.day)"
+        (eventClicked)="handleEvent('Clicked', $event.event)"
+      >
+      </mwl-calendar-month-view>
+      <mwl-calendar-week-view
+        *ngSwitchCase="CalendarView.Week"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        (eventClicked)="handleEvent('Clicked', $event.event)"
+      >
+      </mwl-calendar-week-view>
+      <mwl-calendar-day-view
+        *ngSwitchCase="CalendarView.Day"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        (eventClicked)="handleEvent('Clicked', $event.event)"
+      >
+      </mwl-calendar-day-view>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

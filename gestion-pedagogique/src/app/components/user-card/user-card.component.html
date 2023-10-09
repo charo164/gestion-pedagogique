@@ -1,0 +1,25 @@
+<div class="card flex flex-col">
+  <div class="relative bg-blue-500 lg:h-28 rounded-tl-lg rounded-tr-lg">
+    <img
+      class="w-full h-auto lg:h-full rounded-tl-lg rounded-tr-lg object-cover"
+      src="	https://dreamslms.dreamguystech.com/html/assets/img/instructor-profile-bg.jpg"
+      alt=""
+    />
+    <div
+      class="absolute left-[50%] -translate-x-[50%] top-full -translate-y-[50%] w-[90px] h-[90px] lg:w-[120px] lg:h-[120px] rounded-full border-2 border-white bg-slate-200"
+    ></div>
+  </div>
+  <div class="flex flex-col items-center pt-14 mb-6 lg:pt-[68px] flex-auto">
+    <h3 class="text-xl font-semibold text-[#22100d]">
+      {{ authService.user?.name }}
+    </h3>
+    <p class="text-[14px] text-[#685f78]">
+      {{ authService.user?.roles?.join(", ") }}
+    </p>
+    <button
+      class="py-2 px-4 bg-[#392c7d] mt-4 text-[14px] text-white rounded-lg font-normal"
+    >
+      Edit Profile
+    </button>
+  </div>
+</div>

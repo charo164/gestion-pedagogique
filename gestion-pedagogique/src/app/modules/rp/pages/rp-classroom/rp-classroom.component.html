@@ -1,0 +1,135 @@
+<div class="card p-4 mx-4">
+  <h3 class="text-[#392c7d] w-full font-semibold text-xl py-2">Classroom</h3>
+  <p class="text-[#303030] mb-4">Manage classroom.</p>
+  <hr />
+  <div class="flex justify-between mt-5">
+    <div class="relative">
+      <input
+        (input)="search($event)"
+        [value]="searchTerm"
+        (keydown)="onSearch($event)"
+        type="search"
+        placeholder="Search classroom"
+        class="px-4 py-1 pl-10 border border-[#e9ecef] rounded-lg outline-none"
+      />
+      <fa-icon
+        size="sm"
+        [icon]="icon.faSearch"
+        class="absolute left-3 top-[50%] translate-y-[-50%] text-[#f66962]"
+      ></fa-icon>
+    </div>
+    <div>
+      <button
+        class="px-6 py-1 border border-[#e9ecef] rounded-lg outline-none bg-[#392c7d] text-white"
+      >
+        add
+      </button>
+    </div>
+  </div>
+  <table class="w-full mt-5">
+    <thead>
+      <tr>
+        <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">
+          <div class="flex items-center w-full h-full">
+            <input type="checkbox" class="w-4 h-4 mr-2" />
+          </div>
+        </th>
+        <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">Name</th>
+        <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">Capacity</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="!classroomService.fetching; else loader">
+      <tr
+        *ngFor="
+          let classroom of classrooms
+            | paginate
+              : {
+                  itemsPerPage: pagination.itemsPerPage,
+                  currentPage: pagination.currentPage,
+                  totalItems: pagination.totalItems
+                }
+        "
+        class="border-b border-gray-200 last:border-none"
+      >
+        <td class="text-[#22100d] py-4 px-1 text-left align-middle">
+          <div class="flex items-center w-full h-full">
+            <input type="checkbox" class="w-4 h-4 mr-2" />
+          </div>
+        </td>
+        <td class="text-[#22100d] py-4 px-1 text-left">
+          <div class="flex items-center w-full h-full">
+            <span class="inline-block">
+              {{ classroom.name }}
+            </span>
+          </div>
+        </td>
+        <td class="text-[#22100d] py-4 px-1 text-left">
+          {{ classroom.capacity }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="flex p-2 justify-center items-center mt-4">
+    <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
+  </div>
+</div>
+
+<!-- skeleton -->
+<ng-template #loader>
+  <tbody>
+    <tr
+      *ngFor="let e of [].constructor(pagination.itemsPerPage)"
+      class="border-b border-gray-200 last:border-none"
+    >
+      <td class="align-middle h-[56.36px] px-1">
+        <span
+          class="inline-block animate-pulse w-4 h-[17px] rounded-sm bg-slate-500"
+        ></span>
+      </td>
+      <td class="align-middle h-[56.36px] px-1">
+        <span
+          class="inline-block animate-pulse w-36 h-[17px] rounded-sm bg-slate-500"
+        ></span>
+      </td>
+      <td class="align-middle h-[56.36px] px-1 text-left">
+        <span
+          class="inline-block animate-pulse w-36 h-[17px] rounded-sm bg-slate-500"
+        ></span>
+      </td>
+    </tr>
+  </tbody>
+</ng-template>
+
+<div
+  *ngIf="modal.showAddModal"
+  (click)="modal.showAddModal = false"
+  class="fixed flex justify-center items-center left-0 top-0 w-full h-full z-30 bg-[#000000c2]"
+>
+  <div class="card p-4" (click)="$event.stopPropagation()">
+    <h3 class="text-[#392c7d] w-full font-semibold text-base uppercase py-2">
+      Add teacher
+    </h3>
+    <hr />
+    <div class="flex gap-2 mt-4">
+      <div class="relative">
+        <input
+          type="search"
+          placeholder="Add school year"
+          class="px-4 py-1 pl-10 border border-[#e9ecef] rounded-lg outline-none"
+        />
+        <fa-icon
+          size="sm"
+          [icon]="icon.faAdd"
+          class="absolute left-3 top-[50%] translate-y-[-50%] text-[#f66962]"
+        ></fa-icon>
+      </div>
+      <button
+        [disabled]=""
+        type="submit"
+        class="px-6 py-1 border border-[#e9ecef] rounded-lg outline-none bg-[#392c7d] disabled:bg-slate-300 text-white"
+      >
+        add
+      </button>
+    </div>
+  </div>
+</div>

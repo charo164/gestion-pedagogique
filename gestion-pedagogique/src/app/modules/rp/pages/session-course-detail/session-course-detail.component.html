@@ -1,0 +1,41 @@
+<div class="mx-4">
+  <div class="card flex justify-between p-8">
+    <div class="flex flex-col gap-3 justify-between">
+      <div class="flex flex-col">
+        <div class="font-semibold text-2xl text-blue-600">
+          {{ session?.scheduled_course?.module }}
+        </div>
+        <div class="text-[#3d3736] font-semibold">
+          avec {{ session?.scheduled_course?.user }} et la
+          {{ session?.scheduled_course?.classe }}
+        </div>
+      </div>
+      <div class="flex gap-5">
+        <div class="flex gap-2 font-medium">
+          <fa-icon class="text-pink-600" [icon]="icons.faSchoolFlag"></fa-icon>
+          {{ session?.classroom }}
+        </div>
+        <div class="flex gap-2 font-medium">
+          <fa-icon class="text-yellow-600" [icon]="icons.faHourglass"></fa-icon>
+          {{ session?.scheduled_course?.total_hours }}h
+        </div>
+        <div class="flex gap-2 font-medium capitalize">
+          <fa-icon
+            [class]="
+              session?.scheduled_course?.type === 'online'
+                ? 'text-green-600'
+                : 'text-red-600'
+            "
+            [icon]="icons.faCircle"
+          ></fa-icon>
+          {{ session?.scheduled_course?.type }}
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="font-semibold text-xl text-green-600">
+        {{ status.message }}
+      </div>
+    </div>
+  </div>
+</div>
