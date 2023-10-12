@@ -14,6 +14,7 @@ import {
   faHourglass,
   faSearch,
 } from '@fortawesome/free-solid-svg-icons';
+import { smoothScrollTo } from 'src/utils';
 
 @Component({
   selector: 'app-rp-scheduled-course',
@@ -54,6 +55,7 @@ export class RpScheduledCourseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    smoothScrollTo()
     this.getScheduledCourses();
   }
 

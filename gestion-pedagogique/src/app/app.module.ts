@@ -44,7 +44,10 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     ToastrModule.forRoot(),
     FontAwesomeModule,
     SharedModule,
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
   providers: [
     provideAnimations(), // required animations providers

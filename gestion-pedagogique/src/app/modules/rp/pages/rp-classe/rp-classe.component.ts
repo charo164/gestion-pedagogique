@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Classe, ClasseService } from '@app/data/services/classe.service';
 import { faSearch, faAdd } from '@fortawesome/free-solid-svg-icons';
+import { smoothScrollTo } from 'src/utils';
 
 @Component({
   selector: 'app-rp-classe',
@@ -31,6 +32,7 @@ export class RpClasseComponent implements OnInit {
   constructor(public classeService: ClasseService) {}
 
   ngOnInit(): void {
+    smoothScrollTo()
     this.classeService
       .getAll({ limit: this.pagination.itemsPerPage })
       .subscribe((res) => {

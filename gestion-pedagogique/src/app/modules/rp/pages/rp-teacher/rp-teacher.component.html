@@ -35,7 +35,6 @@
           </div>
         </th>
         <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">Teacher</th>
-        <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">Email</th>
         <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">Grade</th>
         <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left pr-4">
           Specialization
@@ -62,15 +61,17 @@
         </td>
         <td class="text-[#22100d] py-4 px-1 text-left">
           <div class="flex items-center w-full h-full">
-            <span class="inline-block w-8 h-8 rounded-full mr-2 bg-slate-400">
+            <span class="inline-block w-9 h-9 rounded-full mr-2 bg-slate-400">
             </span>
-            <span class="inline-block">
-              {{ user.name }}
-            </span>
+            <div class="flex flex-col">
+              <span class="inline-block">
+                {{ user.name }}
+              </span>
+              <span class="inline-block">
+                {{ user.email }}
+              </span>
+            </div>
           </div>
-        </td>
-        <td class="text-[#22100d] py-4 px-1 text-left">
-          {{ user.email }}
         </td>
         <td class="text-[#22100d] py-4 px-1 text-left">
           {{ user.teacher?.rank }}

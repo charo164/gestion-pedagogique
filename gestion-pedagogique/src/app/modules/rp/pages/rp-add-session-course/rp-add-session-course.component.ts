@@ -17,6 +17,7 @@ import {
 import { ToastrService } from 'ngx-toastr';
 import { ClassroomService } from '../../../../data/services/classroom.service';
 import { SessionCourseService } from '../../../../data/services/session-course.service';
+import { smoothScrollTo } from 'src/utils';
 
 @Component({
   selector: 'app-rp-add-session-course',
@@ -51,6 +52,7 @@ export class RpAddSessionCourseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    smoothScrollTo()
     this.scheduledCourseService.getAll({}).subscribe((res) => {
       if ('error' in res) return;
 

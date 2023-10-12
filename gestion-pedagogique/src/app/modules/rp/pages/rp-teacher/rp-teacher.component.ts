@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '@app/data/schemas/User';
 import { UserService } from '@app/data/services/user.service';
 import { faSearch, faAdd } from '@fortawesome/free-solid-svg-icons';
+import { smoothScrollTo } from 'src/utils';
 
 @Component({
   selector: 'app-rp-teacher',
@@ -32,6 +33,7 @@ export class RpTeacherComponent implements OnInit {
   constructor(public userService: UserService) {}
 
   ngOnInit(): void {
+    smoothScrollTo()
     this.userService
       .getAll({
         limit: this.pagination.itemsPerPage,

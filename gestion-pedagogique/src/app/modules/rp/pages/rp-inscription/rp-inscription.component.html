@@ -1,0 +1,269 @@
+<div class="card p-4 mx-4">
+  <h3 class="text-[#392c7d] w-full font-semibold text-xl py-2">Inscription</h3>
+  <p class="text-[#303030] mb-4">Manage inscription.</p>
+  <hr />
+  <div class="flex justify-between mt-5">
+    <div class="relative">
+      <input
+        (input)="search($event)"
+        [value]="searchTerm"
+        (keydown)="onSearch($event)"
+        type="search"
+        placeholder="Search teacher"
+        class="px-4 py-1 pl-10 border border-[#e9ecef] rounded-lg outline-none"
+      />
+      <fa-icon
+        size="sm"
+        [icon]="icon.faSearch"
+        class="absolute left-3 top-[50%] translate-y-[-50%] text-[#f66962]"
+      ></fa-icon>
+    </div>
+    <div>
+      <button
+        (click)="modal.showAddModal = true"
+        class="px-6 py-1 border border-[#e9ecef] rounded-lg outline-none bg-[#392c7d] text-white"
+      >
+        Registre students
+      </button>
+    </div>
+  </div>
+  <table class="w-full mt-5">
+    <thead>
+      <tr>
+        <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">
+          <div class="flex items-center w-full h-full">
+            <input type="checkbox" class="w-4 h-4 mr-2" />
+          </div>
+        </th>
+        <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">Student</th>
+        <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">Classe</th>
+        <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left pr-4">
+          Birth date
+        </th>
+        <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left pr-4">
+          Birth place
+        </th>
+      </tr>
+    </thead>
+    <tbody *ngIf="!inscriptionService.fetching; else loader">
+      <tr
+        *ngFor="
+          let user of users
+            | paginate
+              : {
+                  itemsPerPage: pagination.itemsPerPage,
+                  currentPage: pagination.currentPage,
+                  totalItems: pagination.totalItems
+                }
+        "
+        class="border-b border-gray-200 last:border-none"
+      >
+        <td class="text-[#22100d] py-4 px-1 text-left align-middle">
+          <div class="flex items-center w-full h-full">
+            <input type="checkbox" class="w-4 h-4 mr-2" />
+          </div>
+        </td>
+        <td class="text-[#22100d] py-4 px-1 text-left">
+          <div class="flex items-center w-full h-full">
+            <div>
+              <span
+                class="inline-block w-10 h-10 rounded-full mr-2 bg-slate-400"
+              ></span>
+            </div>
+            <div class="flex flex-col">
+              <span class="inline-block font-semibold">
+                {{ user.name }}
+              </span>
+              <span class="inline-block text-sm text-gray-500">
+                {{ user.email }}
+              </span>
+              <span class="inline-block text-sm text-gray-500">
+                {{ user.matricule }}
+              </span>
+            </div>
+          </div>
+        </td>
+        <td class="text-[#22100d] py-4 px-1 text-left">
+          {{ user.classe }}
+        </td>
+        <td class="text-[#22100d] py-4 px-1 text-left pr-4">
+          {{ user.birth_date }}
+        </td>
+        <td class="text-[#22100d] py-4 px-1 text-left pr-4">
+          {{ user.birth_place }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="flex p-2 justify-center items-center mt-4">
+    <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
+  </div>
+</div>
+
+<!-- skeleton -->
+<ng-template #loader>
+  <tbody>
+    <tr
+      *ngFor="let e of [].constructor(pagination.itemsPerPage)"
+      class="border-b border-gray-200 last:border-none"
+    >
+      <td class="align-middle h-[56.36px] px-1">
+        <span
+          class="inline-block animate-pulse w-4 h-[17px] rounded-sm bg-slate-500"
+        ></span>
+      </td>
+      <td class="align-middle h-[56.36px] px-1">
+        <span
+          class="inline-block animate-pulse w-36 h-[17px] rounded-sm bg-slate-500"
+        ></span>
+      </td>
+      <td class="align-middle h-[56.36px] px-1 text-left">
+        <span
+          class="inline-block animate-pulse w-36 h-[17px] rounded-sm bg-slate-500"
+        ></span>
+      </td>
+      <td class="align-middle h-[56.36px] px-1 text-left">
+        <span
+          class="inline-block animate-pulse w-36 h-[17px] rounded-sm bg-slate-500"
+        ></span>
+      </td>
+      <td class="align-middle h-[56.36px] px-1 text-left pr-4">
+        <span
+          class="inline-block animate-pulse w-36 h-[17px] rounded-sm bg-slate-500"
+        ></span>
+      </td>
+    </tr>
+  </tbody>
+</ng-template>
+
+<div
+  *ngIf="modal.showAddModal"
+  (click)="modal.showAddModal = false"
+  class="fixed flex justify-center items-center left-0 top-0 w-full h-full z-30 bg-[#000000c2]"
+>
+  <div
+    (click)="modal.showAddModal = false"
+    class="fixed flex justify-center items-center left-0 top-0 w-full h-full z-30 bg-[#000000c2]"
+  >
+    <div class="card p-4 w-full max-w-2xl" (click)="$event.stopPropagation()">
+      <h3 class="text-[#392c7d] w-full font-semibold text-base uppercase py-2">
+        Add scheduled course
+      </h3>
+      <hr />
+      <form
+        [formGroup]="inscriptionForm"
+        (submit)="onRegistreStudents()"
+        class="flex flex-col gap-5 mt-4"
+      >
+        <div class="flex flex-col">
+          <label class="font-semibold text-sm mb-2" for="classe_id">
+            Classe
+            <span class="text-red-500">*</span>
+          </label>
+          <ng-select
+            id="classe_id"
+            placeholder="Choose a classe"
+            formControlName="classe_id"
+          >
+            <ng-option *ngFor="let classe of classes" [value]="classe.id">{{
+              classe.displayName
+            }}</ng-option>
+          </ng-select>
+        </div>
+        <div class="flex flex-col">
+          <label class="font-semibold text-sm mb-2" for="students">
+            Import students
+            <span class="text-red-500">*</span>
+          </label>
+          <div>
+            <label
+              for="dropzone-file"
+              class="flex relative flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+            >
+              <div
+                *ngIf="inscriptionForm.value.students?.length"
+                class="absolute left-0 top-0 w-full h-full overflow-y-auto bg-white rounded-lg"
+              >
+                <table class="table-auto border-collapse w-full">
+                  <thead>
+                    <tr
+                      class="rounded-lg text-xs font-medium text-gray-700 text-left"
+                    >
+                      <th
+                        class="px-4 py-2 bg-gray-200"
+                        style="background-color: #f8f8f8"
+                      >
+                        Name
+                      </th>
+                      <th class="px-4 py-2" style="background-color: #f8f8f8">
+                        Email
+                      </th>
+                      <th class="px-4 py-2" style="background-color: #f8f8f8">
+                        Matricule
+                      </th>
+                      <th class="px-4 py-2" style="background-color: #f8f8f8">
+                        Birth date
+                      </th>
+                      <th class="px-4 py-2" style="background-color: #f8f8f8">
+                        Birth place
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-xs font-normal text-gray-700">
+                    <tr
+                      *ngFor="let student of inscriptionForm.value.students"
+                      class="hover:bg-gray-100 border-b border-gray-200 py-10"
+                    >
+                      <td class="px-4 py-4">{{ student.name }}</td>
+                      <td class="px-4 py-4">{{ student.email }}</td>
+                      <td class="px-4 py-4">{{ student.matricule }}</td>
+                      <td class="px-4 py-4">{{ student.birth_date }}</td>
+                      <td class="px-4 py-4">{{ student.birth_place }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                <svg
+                  class="w-10 h-10 mb-3 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                  ></path>
+                </svg>
+                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                  <span class="font-semibold">Click to upload</span> or drag and
+                  drop
+                </p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">
+                  CSV (name, email matricule...)
+                </p>
+              </div>
+              <input
+                (change)="onFileChange($event)"
+                accept=".csv"
+                id="dropzone-file"
+                type="file"
+                class="hidden"
+              />
+            </label>
+          </div>
+        </div>
+        <button
+          [disabled]="!inscriptionForm.valid"
+          type="submit"
+          class="px-6 py-2 border border-[#babcbe] rounded-lg outline-none bg-[#392c7d] disabled:bg-slate-300 text-white"
+        >
+          Registre
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

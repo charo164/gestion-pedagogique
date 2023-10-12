@@ -20,6 +20,7 @@ import { ClassroomService } from '../../../../data/services/classroom.service';
 import { UserService } from '../../../../data/services/user.service';
 import { ClasseService } from '../../../../data/services/classe.service';
 import { ModuleService } from '../../../../data/services/module.service';
+import { smoothScrollTo } from 'src/utils';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -73,10 +74,12 @@ export class RpSessionCourseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    smoothScrollTo()
     this.getSessionCourses();
     this.getClassroom();
     this.getProfessors();
   }
+
 
   getSessionCourses() {
     this.sessionCourseService.getAll().subscribe((res) => {

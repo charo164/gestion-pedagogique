@@ -29,8 +29,12 @@ export class ResApiService<T> {
 
   getAll(params?: Record<string, string | number>) {
     this.fetching = true;
+    const school_year = localStorage.getItem('localSchoolYearId') || '';
+
     return this.http
-      .get<ApiResponse<T[]>>(`${this.url}?${this.parseQuery(params)}`)
+      .get<ApiResponse<T[]>>(`${this.url}`, {
+        params: { ...params, school_year },
+      })
       .pipe(
         map((data) => {
           this.fetching = false;
@@ -42,8 +46,11 @@ export class ResApiService<T> {
 
   getOne(id: string, params?: Record<string, string | number>) {
     this.fetching = true;
+    const school_year = localStorage.getItem('localSchoolYearId') || '';
     return this.http
-      .get<ApiResponse<T>>(`${this.url}/${id}?${this.parseQuery(params)}`)
+      .get<ApiResponse<T>>(`${this.url}/${id}`, {
+        params: { ...params, school_year },
+      })
       .pipe(
         map((data) => {
           this.fetching = false;
@@ -53,10 +60,14 @@ export class ResApiService<T> {
       );
   }
 
-  create(data: Partial<T>, params?: Record<string, string | number>) {
+  create<R>(data: any, params?: Record<string, string | number>) {
     this.updating = true;
+    const school_year_id = localStorage.getItem('localSchoolYearId') || '';
+    data = { ...data, school_year_id };
     return this.http
-      .post<ApiResponse<T>>(`${this.url}?${this.parseQuery(params)}`, data)
+      .post<ApiResponse<R>>(`${this.url}`, data, {
+        params,
+      })
       .pipe(
         map((data) => {
           this.updating = false;
@@ -72,8 +83,10 @@ export class ResApiService<T> {
     params?: Record<string, string | number>
   ) {
     this.updating = true;
+    const school_year_id = localStorage.getItem('localSchoolYearId') || '';
+    data = { ...data, school_year_id };
     return this.http
-      .put<ApiResponse<T>>(`${this.url}/${id}?${this.parseQuery(params)}`, data)
+      .put<ApiResponse<T>>(`${this.url}/${id}`, data, { params })
       .pipe(
         map((data) => {
           this.updating = false;
@@ -84,9 +97,12 @@ export class ResApiService<T> {
   }
 
   delete(id: string, params?: Record<string, string | number>) {
+    const school_year = localStorage.getItem('localSchoolYearId') || '';
     this.updating = true;
     return this.http
-      .delete<ApiResponse<T>>(`${this.url}/${id}?${this.parseQuery(params)}`)
+      .delete<ApiResponse<T>>(`${this.url}/${id}`, {
+        params: { ...params, school_year },
+      })
       .pipe(
         map((data) => {
           this.updating = false;
@@ -99,16 +115,5 @@ export class ResApiService<T> {
   private handleError(error: any) {
     console.error(error);
     return of({ error: true, message: error.error.message });
-  }
-
-  private parseQuery(query?: Record<string, string | number>) {
-    if (!query) return '';
-    const params = new URLSearchParams();
-
-    Object.keys(query).forEach((key) => {
-      params.set(key, query[key].toString());
-    });
-
-    return params.toString();
   }
 }

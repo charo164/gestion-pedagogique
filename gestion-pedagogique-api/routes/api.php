@@ -40,4 +40,6 @@ Route::middleware(["default_school_year", "auth:api"])->group(function () {
     Route::apiResource('scheduled-courses', \App\Http\Controllers\ScheduledCourseController::class);
     Route::apiResource('session-courses', \App\Http\Controllers\SessionCourseController::class);
     Route::apiResource('users', \App\Http\Controllers\UserController::class);
+    Route::apiResource('inscriptions', \App\Http\Controllers\InscriptionController::class);
+    Route::apiResource('attendance-list', \App\Http\Controllers\AttendanceListController::class);
 });

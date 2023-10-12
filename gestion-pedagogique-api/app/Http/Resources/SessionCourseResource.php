@@ -20,6 +20,7 @@ class SessionCourseResource extends AppJsonResource
             'end_date' => $this->end_date,
             'canceled' => $this->canceled,
             'scheduled_course' => new  ScheduledCourseResource($this->scheduled_course),
+            'attendance_lists' => AttendanceListResource::collection($this->attendance_lists),
             'classroom' => $this->classroom->name,
             'school_year' => $this->school_year->name,
         ];

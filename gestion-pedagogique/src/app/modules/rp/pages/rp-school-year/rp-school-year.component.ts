@@ -12,6 +12,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { tap } from 'rxjs';
+import { smoothScrollTo } from 'src/utils';
 
 @Component({
   selector: 'app-rp-school-year',
@@ -47,6 +48,7 @@ export class RpSchoolYearComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    smoothScrollTo();
     this.schoolYearService
       .getAll({ limit: this.pagination.itemsPerPage })
       .subscribe((res) => {
@@ -91,7 +93,7 @@ export class RpSchoolYearComponent implements OnInit {
   addSchoolYear() {
     if (this.year === '') return alert('Please enter a year');
 
-    this.schoolYearService.create({ name: this.year }).subscribe((res) => {
+    this.schoolYearService.create<any>({ name: this.year }).subscribe((res) => {
       if ('error' in res) {
         this.toast.error(res.message);
         return;

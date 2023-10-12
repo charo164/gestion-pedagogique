@@ -11,6 +11,7 @@ use App\Models\ScheduledCourse;
 use App\Models\SchoolYear;
 use App\Traits\AppPermissionTrait;
 use Illuminate\Contracts\Session\Session;
+use Illuminate\Support\Facades\Log;
 
 class SessionCourseController extends Controller
 {
@@ -123,7 +124,9 @@ class SessionCourseController extends Controller
      */
     public function update(UpdateSessionCourseRequest $request, SessionCourse $sessionCourse)
     {
-        return new SessionCourseResource($sessionCourse->update($request->validated()));
+        $sessionCourse->update($request->validated());
+
+        return new SessionCourseResource($sessionCourse);
     }
 
     /**

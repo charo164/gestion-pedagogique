@@ -6,8 +6,14 @@
       alt=""
     />
     <div
-      class="absolute left-[50%] -translate-x-[50%] top-full -translate-y-[50%] w-[90px] h-[90px] lg:w-[120px] lg:h-[120px] rounded-full border-2 border-white bg-slate-200"
-    ></div>
+      class="absolute overflow-hidden left-[50%] -translate-x-[50%] top-full -translate-y-[50%] w-[90px] h-[90px] lg:w-[120px] lg:h-[120px] rounded-full border-2 border-white bg-slate-200"
+    >
+      <img
+        class="w-full h-full object-cover"
+        [src]="authService.user?.profile"
+        alt="user profile"
+      />
+    </div>
   </div>
   <div class="flex flex-col items-center pt-14 mb-6 lg:pt-[68px] flex-auto">
     <h3 class="text-xl font-semibold text-[#22100d]">
@@ -16,10 +22,18 @@
     <p class="text-[14px] text-[#685f78]">
       {{ authService.user?.roles?.join(", ") }}
     </p>
-    <button
+    <select
+      *ngIf="!loadingYear; else loaderYear"
+      (change)="onSchoolYearChange($event)"
       class="py-2 px-4 bg-[#392c7d] mt-4 text-[14px] text-white rounded-lg font-normal"
     >
-      Edit Profile
-    </button>
+      <option [selected]="selectedSchoolYearId==schoolYear.id.toString()" *ngFor="let schoolYear of schoolYears" [value]="schoolYear.id">
+        {{ schoolYear.name }}
+      </option>
+    </select>
+
+    <ng-template #loaderYear>
+      <div class="bg-slate-500 w-32 h-8 animate-pulse rounded-lg mt-4"></div>
+    </ng-template>
   </div>
 </div>

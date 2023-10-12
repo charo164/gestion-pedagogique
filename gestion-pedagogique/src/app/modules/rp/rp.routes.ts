@@ -1,17 +1,19 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { RpHomeComponent } from './pages/rp-home/rp-home.component';
+import { RouterModule, Routes } from '@angular/router';
 import { DashboardLayoutComponent } from '@app/components/dashboard-layout/dashboard-layout.component';
-import { RpSchoolYearComponent } from './pages/rp-school-year/rp-school-year.component';
-import { RpTeacherComponent } from './pages/rp-teacher/rp-teacher.component';
-import { RpClassroomComponent } from './pages/rp-classroom/rp-classroom.component';
-import { RpClasseComponent } from './pages/rp-classe/rp-classe.component';
-import { RpModuleComponent } from './pages/rp-module/rp-module.component';
-import { RpScheduledCourseComponent } from './pages/rp-scheduled-course/rp-scheduled-course.component';
-import { RpSessionCourseComponent } from './pages/rp-session-course/rp-session-course.component';
 import { RpAddScheduledCourseComponent } from './pages/rp-add-scheduled-course/rp-add-scheduled-course.component';
 import { RpAddSessionCourseComponent } from './pages/rp-add-session-course/rp-add-session-course.component';
+import { RpClasseComponent } from './pages/rp-classe/rp-classe.component';
+import { RpClassroomComponent } from './pages/rp-classroom/rp-classroom.component';
+import { RpHomeComponent } from './pages/rp-home/rp-home.component';
+import { RpModuleComponent } from './pages/rp-module/rp-module.component';
+import { RpScheduledCourseComponent } from './pages/rp-scheduled-course/rp-scheduled-course.component';
+import { RpSchoolYearComponent } from './pages/rp-school-year/rp-school-year.component';
+import { RpSessionCourseComponent } from './pages/rp-session-course/rp-session-course.component';
+import { RpStudentComponent } from './pages/rp-student/rp-student.component';
+import { RpTeacherComponent } from './pages/rp-teacher/rp-teacher.component';
 import { SessionCourseDetailComponent } from './pages/session-course-detail/session-course-detail.component';
+import { RpInscriptionComponent } from './pages/rp-inscription/rp-inscription.component';
 
 const routes: Routes = [
   {
@@ -26,6 +28,14 @@ const routes: Routes = [
       {
         path: 'teacher',
         component: RpTeacherComponent,
+      },
+      {
+        path: 'student',
+        component: RpStudentComponent,
+      },
+      {
+        path: 'inscription',
+        component: RpInscriptionComponent
       },
       {
         path: 'classroom',

@@ -38,6 +38,7 @@ class UserSeeder extends Seeder
     $rp = \App\Models\User::factory()->create([
       'name' => 'Rp User',
       'email' => 'rp@example.com',
+      'profile' => 'https://randomuser.me/api/portraits/women/17.jpg',
       'password' => bcrypt('password'),
     ]);
 

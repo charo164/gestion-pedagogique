@@ -19,6 +19,8 @@ class UserResource extends AppJsonResource
             'id' => $this->id,
             'email' => $this->email,
             'name'=> $this->name,
+            'matricule' => $this->matricule,
+            'profile' => $this->profile,
             'roles' => $this->roles()->pluck('name')->toArray(),
             'teacher' => $this->teacher ? [
                 'rank' => $this->teacher->rank->name,

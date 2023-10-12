@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('classe_id')->references('id')->on('classes')->onDelete('cascade');
             $table->foreign('school_year_id')->references('id')->on('school_years')->onDelete('cascade');
+            $table->unique(['user_id', 'classe_id', 'school_year_id'], "unique_inscription");
             $table->timestamps();
         });
     }

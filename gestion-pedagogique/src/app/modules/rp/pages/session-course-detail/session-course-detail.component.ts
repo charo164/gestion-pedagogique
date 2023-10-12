@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
+import { AttendanceListService } from '@app/data/services/attendance-list.service';
 import {
   SessionCourse,
   SessionCourseService,
@@ -8,7 +9,15 @@ import {
   faSchoolFlag,
   faHourglass,
   faCircle,
+  faAdd,
+  faSearch,
 } from '@fortawesome/free-solid-svg-icons';
+import { smoothScrollTo } from 'src/utils';
+
+interface SessionStatus {
+  message: string;
+  type: 'pending' | 'live' | 'completed';
+}
 
 @Component({
   selector: 'app-session-course-detail',
@@ -18,10 +27,23 @@ import {
 export class SessionCourseDetailComponent implements OnInit {
   public sessionCourseId: string | null = null;
   public session: SessionCourse | null = null;
-  public status: { message: string; type: 'pending' | 'live' | 'completed' } = {
+  public status: SessionStatus = {
     message: '',
     type: 'pending',
   };
+  public icon = {
+    faSearch,
+    faAdd,
+  };
+
+  public pagination = {
+    currentPage: 1,
+    totalItems: 0,
+    itemsPerPage: 5,
+    loading: false,
+  };
+
+  public searchTerm = '';
 
   public icons = {
     faSchoolFlag,
@@ -31,10 +53,12 @@ export class SessionCourseDetailComponent implements OnInit {
 
   constructor(
     public sessionCourseService: SessionCourseService,
+    public attendanceListService: AttendanceListService,
     public router: Router
   ) {}
 
   ngOnInit() {
+    smoothScrollTo();
     this.collectRouteParams(this.router);
     this.getSession();
   }
@@ -47,23 +71,7 @@ export class SessionCourseDetailComponent implements OnInit {
 
         this.session = res.data;
 
-        const startDateTime = new Date(this.session.start_date);
-        const endDateTime = new Date(this.session.end_date);
-        const currentDateTime = new Date();
-
-        if (currentDateTime < startDateTime && currentDateTime < endDateTime) {
-          this.status.message = 'Debut le ' + startDateTime.toLocaleString();
-          this.status.type = 'pending';
-        } else if (
-          currentDateTime > endDateTime &&
-          currentDateTime > startDateTime
-        ) {
-          this.status.message = 'Terminé le ' + endDateTime.toLocaleString();
-          this.status.type = 'completed';
-        } else {
-          this.status.message = `En cours`;
-          this.status.type = 'live';
-        }
+        this.status = this.getSessionStatusAndMessage();
 
         console.log(this.session);
       });
@@ -80,5 +88,67 @@ export class SessionCourseDetailComponent implements OnInit {
     }
 
     this.sessionCourseId = params['id'] ?? null;
+  }
+
+  getSessionStatusAndMessage(): SessionStatus {
+    const startDateTime = new Date(this.session?.start_date ?? '');
+    const endDateTime = new Date(this.session?.end_date ?? '');
+    const currentDateTime = new Date();
+
+    if (currentDateTime < startDateTime && currentDateTime < endDateTime) {
+      return {
+        // Debut le dd/mm/yyyy a hh:mm
+        message: `${startDateTime.toLocaleString()}`,
+        type: 'pending',
+      };
+    } else if (
+      currentDateTime > endDateTime &&
+      currentDateTime > startDateTime
+    ) {
+      return {
+        message: 'Terminé',
+        type: 'completed',
+      };
+    } else {
+      return {
+        message: `En cours`,
+        type: 'live',
+      };
+    }
+  }
+
+  getPage(page: number) {
+    this.pagination.currentPage = page;
+  }
+
+  search(e: Event) {
+    const value = (e.target as HTMLInputElement).value;
+    this.searchTerm = value;
+
+    if (value === '') this.getPage(1);
+  }
+
+  onSearch(e: KeyboardEvent) {
+    if (e.key === 'Enter' && this.searchTerm.trim() != '') this.getPage(1);
+  }
+
+  cancelSession(canceled: boolean) {
+    if (!confirm('Voulez-vous vraiment faire ca?')) return;
+    this.sessionCourseService
+      .update(this.session?.id.toString() || '', { canceled })
+      .subscribe((res) => {
+        if ('error' in res) return;
+
+        this.getSession();
+      });
+  }
+
+  validePresence(id: string, status: boolean = true) {
+    if (!confirm('Voulez-vous vraiment faire ca?')) return;
+    this.attendanceListService.update(id, { status }).subscribe((res) => {
+      if ('error' in res) return;
+
+      this.getSession();
+    });
   }
 }

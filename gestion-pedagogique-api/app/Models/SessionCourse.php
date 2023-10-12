@@ -6,6 +6,7 @@ use App\Exceptions\HttpException;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class SessionCourse extends Model
 {
@@ -19,6 +20,7 @@ class SessionCourse extends Model
         'scheduled_course_id',
         'classroom_id',
         'school_year_id',
+        'canceled'
     ];
 
     /**
@@ -53,9 +55,9 @@ class SessionCourse extends Model
         return true;
     }
 
-    public static function checkProfessorBooking(string $professorCoures, string $start_date, string $end_date)
+    public static function checkProfessorBooking(string $scheduleCoure, string $start_date, string $end_date)
     {
-        $professor = ScheduledCourse::find($professorCoures)->user;
+        $professor = ScheduledCourse::find($scheduleCoure)->user;
 
         $session = SessionCourse::whereHas('scheduled_course', function ($query) use ($professor) {
             $query->where('user_id', $professor->id);
@@ -130,12 +132,18 @@ class SessionCourse extends Model
         return $this->belongsTo(SchoolYear::class);
     }
 
+    public function attendance_lists()
+    {
+        return $this->hasMany(AttendanceList::class);
+    }
+
     // Events
     public static function boot()
     {
         parent::boot();
 
         self::created(function ($model) {
+            // Update the scheduled_course hours
             $scheduledCourse = ScheduledCourse::find($model->scheduled_course_id);
 
             $duration = now()->parse($model->start_date)->floatDiffInRealHours(now()->parse($model->end_date));
@@ -143,6 +151,19 @@ class SessionCourse extends Model
             $scheduledCourse->update([
                 'scheduled_hours' => $scheduledCourse->scheduled_hours + $duration
             ]);
+
+            // create the attendance list
+            $classe = $scheduledCourse->classe;
+            $inscriptions = Inscription::where('classe_id', $classe->id)->get();
+
+            $al = array_map(function ($inscription) use ($model) {
+                return [
+                    'user_id' => $inscription['user_id'],
+                    'session_course_id' => $model['id']
+                ];
+            }, $inscriptions->toArray());
+
+            AttendanceList::insert($al);
         });
     }
 }

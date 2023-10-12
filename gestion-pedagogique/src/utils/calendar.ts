@@ -20,7 +20,7 @@ export const colorsEvent: Record<string, EventColor> = {
 };
 
 export function getColor(
-  canceled: number,
+  canceled: boolean,
   startTime: Date,
   endTime: Date
 ): EventColor {

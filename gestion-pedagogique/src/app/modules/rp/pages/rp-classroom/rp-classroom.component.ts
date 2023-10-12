@@ -4,6 +4,7 @@ import {
   ClassroomService,
 } from '@app/data/services/classroom.service';
 import { faSearch, faAdd } from '@fortawesome/free-solid-svg-icons';
+import { smoothScrollTo } from 'src/utils';
 
 @Component({
   selector: 'app-rp-classroom',
@@ -34,6 +35,7 @@ export class RpClassroomComponent implements OnInit {
   constructor(public classroomService: ClassroomService) {}
 
   ngOnInit(): void {
+    smoothScrollTo()
     this.classroomService.getAll().subscribe((res) => {
       if ('error' in res) return console.log(res);
       this.classrooms = res.data;

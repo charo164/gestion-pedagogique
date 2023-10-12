@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Inscription;
 use App\Http\Requests\StoreInscriptionRequest;
 use App\Http\Requests\UpdateInscriptionRequest;
+use App\Http\Resources\InscriptionResource;
+use App\Models\User;
 
 class InscriptionController extends Controller
 {
@@ -13,15 +15,37 @@ class InscriptionController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $inscriptionQuery = Inscription::query()->orderBy('created_at', 'desc');
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $limit = request()->query('limit', 10);
+
+        if (request()->has('q') && request()->query('q') !== '') {
+            $inscriptionQuery->whereHas('user', function ($query) {
+                $query->where('name', 'like', '%' . request()->query('q') . '%');
+            })->orWhereHas('classe', function ($query) {
+                $query->where('name', 'like', '%' . request()->query('q') . '%');
+            })->orWhereHas('schoolYear', function ($query) {
+                $query->where('name', 'like', '%' . request()->query('q') . '%');
+            });
+        }
+
+        if (request()->has('school_year') && request()->query('school_year') !== '') {
+            $inscriptionQuery->where('school_year_id', request()->query('school_year'));
+        }
+
+        if (request()->has('classe') && request()->query('classe') !== '') {
+            $inscriptionQuery->where('classe_id', request()->query('classe'));
+        }
+
+        if (request()->has('user') && request()->query('user') !== '') {
+            $inscriptionQuery->where('user_id', request()->query('user'));
+        }
+
+        if ($limit === 'all') return InscriptionResource::collection($inscriptionQuery->get());
+
+        $inscriptions = $inscriptionQuery->paginate($limit);
+
+        return InscriptionResource::collection($inscriptions);
     }
 
     /**
@@ -29,7 +53,38 @@ class InscriptionController extends Controller
      */
     public function store(StoreInscriptionRequest $request)
     {
-        //
+        $success = [];
+        $errors = [];
+
+        $inscriptions = array_map(function ($student) use ($request, &$success, &$errors) {
+            $user = User::findOrCreateStudent($student);
+
+            if ($user == null) {
+                $errors[] = $student;
+                return null;
+            }
+
+            $success[] = $student;
+
+            return [
+                'user_id' => $user->id,
+                'classe_id' => $request->classe_id,
+                'school_year_id' => $request->school_year_id,
+            ];
+        }, $request->students);
+
+        $inscriptions = array_filter($inscriptions, function ($ins) {
+            return $ins !== null;
+        });
+
+        Inscription::insert($inscriptions);
+
+        return response()->json([
+            'data' => [
+                'success' => $success,
+                'errors' => $errors,
+            ],
+        ]);
     }
 
     /**
@@ -37,15 +92,7 @@ class InscriptionController extends Controller
      */
     public function show(Inscription $inscription)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Inscription $inscription)
-    {
-        //
+        return new InscriptionResource($inscription);
     }
 
     /**
@@ -53,7 +100,6 @@ class InscriptionController extends Controller
      */
     public function update(UpdateInscriptionRequest $request, Inscription $inscription)
     {
-        //
     }
 
     /**
@@ -61,6 +107,11 @@ class InscriptionController extends Controller
      */
     public function destroy(Inscription $inscription)
     {
-        //
+        $inscription->delete();
+
+        return response()->json([
+            'data' => null,
+            'message' => 'Inscription deleted successfully',
+        ]);
     }
 }

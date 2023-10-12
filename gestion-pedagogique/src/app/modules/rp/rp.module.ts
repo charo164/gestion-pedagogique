@@ -19,6 +19,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { RpAddScheduledCourseComponent } from './pages/rp-add-scheduled-course/rp-add-scheduled-course.component';
 import { RpAddSessionCourseComponent } from './pages/rp-add-session-course/rp-add-session-course.component';
 import { SessionCourseDetailComponent } from './pages/session-course-detail/session-course-detail.component';
+import { RpStudentComponent } from './pages/rp-student/rp-student.component';
+import { RpInscriptionComponent } from './pages/rp-inscription/rp-inscription.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { SessionCourseDetailComponent } from './pages/session-course-detail/sess
     RpAddScheduledCourseComponent,
     RpAddSessionCourseComponent,
     SessionCourseDetailComponent,
+    RpStudentComponent,
+    RpInscriptionComponent
   ],
   imports: [
     CommonModule,

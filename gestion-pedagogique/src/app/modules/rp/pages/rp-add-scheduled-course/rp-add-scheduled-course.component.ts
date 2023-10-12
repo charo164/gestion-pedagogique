@@ -12,6 +12,7 @@ import {
   faSearch,
 } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
+import { smoothScrollTo } from 'src/utils';
 
 @Component({
   selector: 'app-rp-add-scheduled-course',
@@ -45,11 +46,10 @@ export class RpAddScheduledCourseComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private toast: ToastrService
-  ) {
-    console.log('sdsd');
-  }
+  ) {}
 
   ngOnInit(): void {
+    smoothScrollTo();
     this.userService.getAll({ role: 'professor' }).subscribe((res) => {
       if ('error' in res) return;
 
