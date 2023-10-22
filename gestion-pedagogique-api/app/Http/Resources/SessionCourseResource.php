@@ -19,6 +19,7 @@ class SessionCourseResource extends AppJsonResource
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
             'canceled' => $this->canceled,
+            'attache' => new UserResource($this->attache),
             'scheduled_course' => new  ScheduledCourseResource($this->scheduled_course),
             'attendance_lists' => AttendanceListResource::collection($this->attendance_lists),
             'classroom' => $this->classroom->name,

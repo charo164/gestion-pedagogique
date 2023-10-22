@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { faBell, faComment } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from '../../data/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -11,4 +12,6 @@ export class HeaderComponent {
     faBell,
     faComment
   };
+
+  constructor(public authService:AuthService){}
 }

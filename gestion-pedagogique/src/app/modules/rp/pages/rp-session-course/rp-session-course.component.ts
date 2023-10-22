@@ -15,7 +15,7 @@ import { isSameDay, isSameMonth } from 'date-fns';
 import { Subject } from 'rxjs';
 import { getColor } from 'src/utils/calendar';
 import { faCalendarDays } from '@fortawesome/free-solid-svg-icons';
-import { NgSelectOption } from '@app/data/schemas/NgSelect';
+import { NgLibSelectOption } from '@app/data/schemas/NgSelect';
 import { ClassroomService } from '../../../../data/services/classroom.service';
 import { UserService } from '../../../../data/services/user.service';
 import { ClasseService } from '../../../../data/services/classe.service';
@@ -47,8 +47,8 @@ export class RpSessionCourseComponent implements OnInit {
 
   activeDayIsOpen: boolean = false;
 
-  classrooms: NgSelectOption[] = [];
-  professors: NgSelectOption[] = [];
+  classrooms: NgLibSelectOption[] = [];
+  professors: NgLibSelectOption[] = [];
 
   icons = { faCalendarDays };
 

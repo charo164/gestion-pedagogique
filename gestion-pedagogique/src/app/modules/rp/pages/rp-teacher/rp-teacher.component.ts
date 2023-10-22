@@ -1,7 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { Form, FormBuilder, Validators } from '@angular/forms';
+import { NgLibSelectOption } from '@app/data/schemas/NgSelect';
 import { User } from '@app/data/schemas/User';
+import { RankService } from '@app/data/services/rank.service';
+import { SpecializationService } from '@app/data/services/specialization.service';
 import { UserService } from '@app/data/services/user.service';
-import { faSearch, faAdd } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSearch,
+  faUser,
+  faEnvelope,
+} from '@fortawesome/free-solid-svg-icons';
 import { smoothScrollTo } from 'src/utils';
 
 @Component({
@@ -12,7 +20,8 @@ import { smoothScrollTo } from 'src/utils';
 export class RpTeacherComponent implements OnInit {
   public icon = {
     faSearch,
-    faAdd,
+    faEnvelope,
+    faUser,
   };
 
   public modal = {
@@ -20,6 +29,9 @@ export class RpTeacherComponent implements OnInit {
   };
 
   public users: User[] = [];
+
+  public ranks: NgLibSelectOption[] = [];
+  public specializations: NgLibSelectOption[] = [];
 
   public pagination = {
     currentPage: 1,
@@ -30,10 +42,23 @@ export class RpTeacherComponent implements OnInit {
 
   public searchTerm = '';
 
-  constructor(public userService: UserService) {}
+  public createProfessorForm = this.fb.group({
+    name: this.fb.control('', [Validators.required]),
+    email: this.fb.control('', [Validators.required, Validators.email]),
+    specialization: this.fb.control('', [Validators.required]),
+    rank: this.fb.control('', [Validators.required]),
+    role: this.fb.control('professor', [Validators.required]),
+  });
+
+  constructor(
+    public userService: UserService,
+    public specializationService: SpecializationService,
+    public rankService: RankService,
+    public fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
-    smoothScrollTo()
+    smoothScrollTo();
     this.userService
       .getAll({
         limit: this.pagination.itemsPerPage,
@@ -43,6 +68,39 @@ export class RpTeacherComponent implements OnInit {
         if ('error' in res) return;
 
         this.users = res.data;
+      });
+    this.specializationService.getAll().subscribe((res) => {
+      if ('error' in res) return;
+
+      this.specializations = res.data.map((s) => ({
+        id: s.id,
+        name: s.name,
+        displayName: s.name,
+      }));
+    });
+
+    this.rankService.getAll().subscribe((res) => {
+      if ('error' in res) return;
+
+      this.ranks = res.data.map((r) => ({
+        id: r.id,
+        name: r.name,
+        displayName: r.name,
+      }));
+    });
+  }
+
+  onCreateProfessor() {
+    if (this.createProfessorForm.invalid) return;
+
+    this.userService
+      .create<User>(this.createProfessorForm.getRawValue())
+      .subscribe((res) => {
+        if ('error' in res) return;
+
+        this.users.unshift(res.data);
+        this.createProfessorForm.reset();
+        this.modal.showAddModal = false;
       });
   }
 

@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\HttpException;
+use App\Http\Requests\CreateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Traits\AppPermissionTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -55,6 +58,10 @@ class UserController extends Controller
             $rolesCanSee[] = $this::$ROLES["STUDENT"];
         }
 
+        if ($user->can($this::$PERMISSIONS["VOIR_LES_ATTACHES"]) && ($requestRole === $this::$ROLES["ATTACHE"] || $requestRole === null)) {
+            $rolesCanSee[] = $this::$ROLES["ATTACHE"];
+        }
+
         if (count($rolesCanSee) > 0) {
             $userQuery->whereHas('roles', function ($query) use ($rolesCanSee) {
                 $query->whereIn('name', $rolesCanSee);
@@ -76,9 +83,17 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $request)
     {
-        return new UserResource(User::create($request->validated()));
+        if (!$request->has('password')) {
+            $request->merge(['password' => env('DEFAULT_PASSWORD')]);
+        }
+
+        $user = DB::transaction(function () use ($request) {
+            return User::create($request->only(['password', 'email', 'name']));
+        });
+
+        return new UserResource($user);
     }
 
     /**

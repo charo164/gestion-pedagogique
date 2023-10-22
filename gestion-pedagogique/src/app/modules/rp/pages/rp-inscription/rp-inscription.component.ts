@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { NgSelectOption } from '@app/data/schemas/NgSelect';
+import { NgLibSelectOption } from '@app/data/schemas/NgSelect';
 import { ClasseService } from '@app/data/services/classe.service';
 import {
   InscriptionService,
@@ -32,7 +32,7 @@ export class RpInscriptionComponent {
   };
 
   public users: (Student & { classe: string })[] = [];
-  public classes: NgSelectOption[] = [];
+  public classes: NgLibSelectOption[] = [];
 
   public pagination = {
     currentPage: 1,
@@ -67,6 +67,7 @@ export class RpInscriptionComponent {
         }));
         this.pagination.currentPage = res.pagination?.currentPage || 1;
         this.pagination.totalItems = res.pagination?.total || 0;
+        console.log(this.pagination)
       });
 
     this.classeService.getAll().subscribe((res) => {

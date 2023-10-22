@@ -7,11 +7,8 @@ use App\Models\SessionCourse;
 use App\Http\Requests\StoreSessionCourseRequest;
 use App\Http\Requests\UpdateSessionCourseRequest;
 use App\Http\Resources\SessionCourseResource;
-use App\Models\ScheduledCourse;
-use App\Models\SchoolYear;
+use App\Models\Inscription;
 use App\Traits\AppPermissionTrait;
-use Illuminate\Contracts\Session\Session;
-use Illuminate\Support\Facades\Log;
 
 class SessionCourseController extends Controller
 {
@@ -53,6 +50,16 @@ class SessionCourseController extends Controller
             $sessionCoursesQuery->where('end_date', '<=', request()->query('end_date'));
         }
 
+        if (request()->has('professor')) {
+            $sessionCoursesQuery->whereHas('scheduled_course', function ($query) {
+                $query->where('user_id', request()->query('professor'));
+            });
+        }
+
+        if (request()->has('attache')) {
+            $sessionCoursesQuery->where('attache_id', request()->query('attache'));
+        }
+
         if ($role == $this::$ROLES['RP'] || $role == $this::$ROLES['ADMIN']) {
             if (request()->has('scheduled_course')) {
                 $sessionCoursesQuery->where('scheduled_course_id', request()->query('scheduled_course'));
@@ -80,6 +87,48 @@ class SessionCourseController extends Controller
 
             return SessionCourseResource::collection($sessionCourses);
         }
+
+        if ($role == $this::$ROLES['ATTACHE']) {
+            $sessionCoursesQuery->where('attache_id', $user->id);
+
+            if ($limit === 'all') {
+                return SessionCourseResource::collection($sessionCoursesQuery->get());
+            }
+
+            $sessionCourses = $sessionCoursesQuery->paginate($limit);
+
+            return SessionCourseResource::collection($sessionCourses);
+        }
+
+        if ($role == $this::$ROLES['STUDENT']) {
+            $schoolYear = request()->query('school_year');
+            $inscription = Inscription::where('user_id', $user->id)->where('school_year_id', $schoolYear)->first();
+
+            if (!$inscription) {
+                throw new HttpException('You are not allowed to see this resource !', 403);
+            }
+
+            $classeId = $inscription->classe_id;
+
+            $sessionCoursesQuery->whereHas('scheduled_course', function ($query) use ($classeId) {
+                $query->where('classe_id', $classeId);
+            });
+
+            if (request()->has('attendance')) {
+                $sessionCoursesQuery->whereHas('attendance_lists', function ($query) use ($user) {
+                    $query->where('user_id', $user->id)->where('status', request()->query('attendance') == 'true');
+                });
+            }
+
+            if ($limit === 'all') {
+                return SessionCourseResource::collection($sessionCoursesQuery->get());
+            }
+
+            $sessionCourses = $sessionCoursesQuery->paginate($limit);
+
+            return SessionCourseResource::collection($sessionCourses);
+        }
+
 
         throw new HttpException('You are not allowed to see this resource !', 403);
     }

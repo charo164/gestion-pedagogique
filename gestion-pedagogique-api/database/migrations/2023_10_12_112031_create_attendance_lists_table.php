@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('session_course_id')->references('id')->on('session_courses')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unique(['session_course_id', 'user_id']);
             $table->timestamps();
         });
     }

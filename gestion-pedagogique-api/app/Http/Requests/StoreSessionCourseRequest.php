@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\IsAttache;
 use App\Traits\AppPermissionTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -39,6 +40,7 @@ class StoreSessionCourseRequest extends FormRequest
             'end_date' => ['required', 'date'],
             'scheduled_course_id' => ['required', 'exists:scheduled_courses,id'],
             'classroom_id' => ['required', 'exists:classrooms,id'],
+            'attache_id' => ['required', 'exists:users,id', new IsAttache()],
             'school_year_id' => ['sometimes', 'exists:school_years,id'],
         ];
     }

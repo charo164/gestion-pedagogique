@@ -22,7 +22,8 @@ class UpdateSessionCourseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'canceled' => 'required|boolean',
+            'canceled' => 'sometimes|boolean',
+            'updated_at'=> 'sometimes|date'
         ];
     }
 }

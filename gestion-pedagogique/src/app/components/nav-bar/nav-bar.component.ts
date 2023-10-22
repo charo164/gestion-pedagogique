@@ -10,7 +10,8 @@ import {
   faGraduationCap,
   faHome,
   faLandmark,
-  faSchool
+  faSchool,
+  faSignOut,
 } from '@fortawesome/free-solid-svg-icons';
 
 const links = {
@@ -34,6 +35,27 @@ const links = {
       icon: faCalendarDays,
     },
   ],
+  professor: [
+    { label: 'My Dashboard', path: '/professor', icon: faHome },
+    {
+      label: 'Scheduled Courses',
+      path: '/professor/scheduled-course',
+      icon: faCalendarCheck,
+    },
+    {
+      label: 'Sessions Courses',
+      path: '/professor/session-course',
+      icon: faCalendarDays,
+    },
+  ],
+  attache: [
+    { label: 'My Dashboard', path: '/attache', icon: faHome },
+    {
+      label: 'Sessions Courses',
+      path: '/attache/session-course',
+      icon: faCalendarDays,
+    },
+  ],
 };
 
 @Component({
@@ -46,6 +68,9 @@ export class NavBarComponent {
 
   constructor(private authService: AuthService) {
     const role = this.authService.user?.roles[0] as keyof typeof links;
-    this.links = links[role];
+    this.links = [
+      ...links[role],
+      { label: 'Logout', path: '/auth/logout', icon: faSignOut },
+    ];
   }
 }

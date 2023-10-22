@@ -47,31 +47,25 @@ class UserSeeder extends Seeder
     $prof = \App\Models\User::factory()->create([
       'name' => 'Professor User',
       'email' => 'professor@example.com',
+      'profile'=> 'https://randomuser.me/api/portraits/women/88.jpg',
       'password' => bcrypt('password'),
     ]);
 
     $prof->assignRole('professor');
 
-    $attache = \App\Models\User::factory()->create([
-      'name' => 'Attache User',
-      'email' => 'attache@example.com',
-      'password' => bcrypt('password'),
-    ]);
-
-    $profInfos = \App\Models\TeacherInfo::factory()->create([
+    \App\Models\TeacherInfo::factory()->create([
       'user_id' => $prof->id,
       'specialization_id' => 1,
       'teacher_rank_id' => 1,
     ]);
 
-    $attache->assignRole('attache');
-
-    $student = \App\Models\User::factory()->create([
-      'name' => 'Student User',
-      'email' => 'student@example.com',
+    $attache = \App\Models\User::factory()->create([
+      'name' => 'Attache User',
+      'email' => 'attache@example.com',
+      'profile'=> 'https://randomuser.me/api/portraits/women/69.jpg',
       'password' => bcrypt('password'),
     ]);
 
-    $student->assignRole('student');
+    $attache->assignRole('attache');
   }
 }

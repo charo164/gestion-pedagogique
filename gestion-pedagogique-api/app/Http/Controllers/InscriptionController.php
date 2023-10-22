@@ -7,6 +7,7 @@ use App\Http\Requests\StoreInscriptionRequest;
 use App\Http\Requests\UpdateInscriptionRequest;
 use App\Http\Resources\InscriptionResource;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class InscriptionController extends Controller
 {
@@ -53,38 +54,41 @@ class InscriptionController extends Controller
      */
     public function store(StoreInscriptionRequest $request)
     {
-        $success = [];
-        $errors = [];
+        $data =  DB::transaction(function () use ($request) {
+            $success = [];
+            $errors = [];
 
-        $inscriptions = array_map(function ($student) use ($request, &$success, &$errors) {
-            $user = User::findOrCreateStudent($student);
+            $inscriptions = array_map(function ($student) use ($request, &$success, &$errors) {
+                $user = User::findOrCreateStudent($student);
 
-            if ($user == null) {
-                $errors[] = $student;
-                return null;
-            }
+                if ($user == null) {
+                    $errors[] = $student;
+                    return null;
+                }
 
-            $success[] = $student;
+                $success[] = $student;
+
+                return [
+                    'user_id' => $user->id,
+                    'classe_id' => $request->classe_id,
+                    'school_year_id' => $request->school_year_id,
+                ];
+            }, $request->students);
+
+            $inscriptions = array_filter($inscriptions, function ($ins) {
+                return $ins !== null;
+            });
+
+            Inscription::insert($inscriptions);
 
             return [
-                'user_id' => $user->id,
-                'classe_id' => $request->classe_id,
-                'school_year_id' => $request->school_year_id,
-            ];
-        }, $request->students);
-
-        $inscriptions = array_filter($inscriptions, function ($ins) {
-            return $ins !== null;
-        });
-
-        Inscription::insert($inscriptions);
-
-        return response()->json([
-            'data' => [
                 'success' => $success,
                 'errors' => $errors,
-            ],
-        ]);
+            ];
+        });
+
+
+        return response()->json(['data' => $data]);
     }
 
     /**

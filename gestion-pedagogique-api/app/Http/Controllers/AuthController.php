@@ -7,6 +7,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -16,6 +17,8 @@ class AuthController extends Controller
          * @var User $user
          */
         $user = auth()->user();
+
+        Log::info($user->toArray());
 
         return new UserResource($user);
     }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { NgSelectOption } from '@app/data/schemas/NgSelect';
+import { NgLibSelectOption } from '@app/data/schemas/NgSelect';
 import { Classe, ClasseService } from '@app/data/services/classe.service';
 import { Module, ModuleService } from '@app/data/services/module.service';
 import {

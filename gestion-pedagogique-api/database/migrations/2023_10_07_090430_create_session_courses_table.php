@@ -16,9 +16,11 @@ return new class extends Migration
             $table->datetime('start_date');
             $table->datetime('end_date');
             $table->boolean('canceled')->default(false);
+            $table->unsignedBigInteger('attache_id');
             $table->unsignedBigInteger('scheduled_course_id');
             $table->unsignedBigInteger('classroom_id');
             $table->unsignedBigInteger('school_year_id');
+            $table->foreign('attache_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('scheduled_course_id')->references('id')->on('scheduled_courses')->onDelete('cascade');
             $table->foreign('classroom_id')->references('id')->on('classrooms')->onDelete('cascade');
             $table->foreign('school_year_id')->references('id')->on('school_years')->onDelete('cascade');

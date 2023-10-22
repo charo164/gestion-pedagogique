@@ -20,9 +20,10 @@
     </div>
     <div>
       <button
+        (click)="modal.showAddModal = true"
         class="px-6 py-1 border border-[#e9ecef] rounded-lg outline-none bg-[#392c7d] text-white"
       >
-        add
+        create teacher
       </button>
     </div>
   </div>
@@ -128,31 +129,80 @@
   (click)="modal.showAddModal = false"
   class="fixed flex justify-center items-center left-0 top-0 w-full h-full z-30 bg-[#000000c2]"
 >
-  <div class="card p-4" (click)="$event.stopPropagation()">
+  <div class="card p-4 w-full max-w-lg" (click)="$event.stopPropagation()">
     <h3 class="text-[#392c7d] w-full font-semibold text-base uppercase py-2">
-      Add teacher
+      Add scheduled course
     </h3>
     <hr />
-    <div class="flex gap-2 mt-4">
-      <div class="relative">
+    <form
+      [formGroup]="createProfessorForm"
+      (submit)="onCreateProfessor()"
+      class="flex flex-col gap-5 mt-4"
+    >
+      <div class="flex flex-col">
+        <label class="font-semibold text-sm mb-2" for="name">
+          Professor name
+          <span class="text-red-500">*</span>
+        </label>
         <input
-          type="search"
-          placeholder="Add school year"
-          class="px-4 py-1 pl-10 border border-[#e9ecef] rounded-lg outline-none"
+          id="name"
+          placeholder="John Doe"
+          type="text"
+          formControlName="name"
+          class="px-5 py-2 w-full border border-[#babcbe] rounded-md outline-blue-500"
         />
-        <fa-icon
-          size="sm"
-          [icon]="icon.faAdd"
-          class="absolute left-3 top-[50%] translate-y-[-50%] text-[#f66962]"
-        ></fa-icon>
+      </div>
+      <div class="flex flex-col">
+        <label class="font-semibold text-sm mb-2" for="email">
+          Professor email
+          <span class="text-red-500">*</span>
+        </label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          class="px-5 py-2 w-full border border-[#babcbe] rounded-md outline-blue-500"
+        />
+      </div>
+      <div class="flex flex-col">
+        <label class="font-semibold text-sm mb-2" for="specialization">
+          Specialization
+          <span class="text-red-500">*</span>
+        </label>
+        <ng-select
+          id="specialization"
+          placeholder="Choose a specialization"
+          formControlName="specialization"
+        >
+          <ng-option
+            *ngFor="let specialization of specializations"
+            [value]="specialization.id"
+            >{{ specialization.displayName }}</ng-option
+          >
+        </ng-select>
+      </div>
+      <div class="flex flex-col">
+        <label class="font-semibold text-sm mb-2" for="rank">
+          Rank
+          <span class="text-red-500">*</span>
+        </label>
+        <ng-select
+          id="rank"
+          placeholder="Choose a attache"
+          formControlName="rank"
+        >
+          <ng-option *ngFor="let rank of ranks" [value]="rank.id">{{
+            rank.displayName
+          }}</ng-option>
+        </ng-select>
       </div>
       <button
-        [disabled]=""
+        [disabled]="!createProfessorForm.valid"
         type="submit"
-        class="px-6 py-1 border border-[#e9ecef] rounded-lg outline-none bg-[#392c7d] disabled:bg-slate-300 text-white"
+        class="px-6 py-2 border border-[#babcbe] rounded-lg outline-none bg-[#392c7d] disabled:bg-slate-300 text-white"
       >
-        add
+        Create
       </button>
-    </div>
+    </form>
   </div>
 </div>

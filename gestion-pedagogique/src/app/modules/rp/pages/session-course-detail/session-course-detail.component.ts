@@ -14,7 +14,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { smoothScrollTo } from 'src/utils';
 
-interface SessionStatus {
+export interface SessionStatus {
   message: string;
   type: 'pending' | 'live' | 'completed';
 }

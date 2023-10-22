@@ -1,0 +1,227 @@
+<div class="flex flex-col gap-4">
+  <div class="mx-4" *ngIf="!sessionCourseService.fetching; else session_loader">
+    <div class="card flex justify-between p-8">
+      <div class="flex flex-col gap-3 justify-between">
+        <div class="flex flex-col">
+          <div class="font-semibold text-2xl text-blue-600">
+            {{ session?.scheduled_course?.module }}
+          </div>
+          <div class="text-[#3d3736] font-semibold">
+            avec {{ session?.scheduled_course?.user }} et la
+            {{ session?.scheduled_course?.classe }}
+          </div>
+        </div>
+        <div class="flex gap-5">
+          <div class="flex gap-2 font-medium">
+            <fa-icon
+              class="text-pink-600"
+              [icon]="icons.faSchoolFlag"
+            ></fa-icon>
+            {{ session?.classroom }}
+          </div>
+          <div class="flex gap-2 font-medium">
+            <fa-icon
+              class="text-yellow-600"
+              [icon]="icons.faHourglass"
+            ></fa-icon>
+            {{ session?.scheduled_course?.total_hours }}h
+          </div>
+          <div class="flex gap-2 font-medium capitalize">
+            <fa-icon
+              [class]="
+                session?.scheduled_course?.type === 'online'
+                  ? 'text-green-600'
+                  : 'text-red-600'
+              "
+              [icon]="icons.faCircle"
+            ></fa-icon>
+            {{ session?.scheduled_course?.type }}
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col justify-between items-end">
+        <div class="font-semibold text-xl uppercase">
+          <span *ngIf="status.type == 'pending'" class="text-yellow-500">{{
+            status.message
+          }}</span>
+          <span *ngIf="status.type == 'live'" class="text-green-500">{{
+            status.message
+          }}</span>
+          <span *ngIf="status.type == 'completed'" class="text-gray-500">{{
+            status.message
+          }}</span>
+        </div>
+        <div class="flex justify-end">
+          <button
+            (click)="cancelSession(true)"
+            *ngIf="!session?.canceled && status.type == 'pending'"
+            class="flex items-center gap-2 text-sm text-white bg-[#f66962] px-4 py-1 rounded"
+          >
+            <span>Cancel</span>
+          </button>
+          <button
+            (click)="cancelSession(false)"
+            *ngIf="session?.canceled && status.type == 'pending'"
+            class="flex items-center gap-2 text-sm text-white bg-[#392c7d] px-4 py-1 rounded"
+          >
+            <span>Active</span>
+          </button>
+          <button
+            *ngIf="session?.canceled && status.type != 'pending'"
+            class="flex items-center gap-2 text-sm text-white bg-gray-500 px-4 py-1 rounded"
+          >
+            <span>Canceled</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card p-4 mx-4">
+    <h3 class="text-[#392c7d] w-full font-semibold text-xl py-2">
+      Presence List
+    </h3>
+    <p class="text-[#303030] mb-4">Manage the presence list of the session</p>
+    <hr />
+    <div class="flex justify-between mt-5">
+      <div class="relative">
+        <input
+          (input)="search($event)"
+          [value]="searchTerm"
+          (keydown)="onSearch($event)"
+          type="search"
+          placeholder="Search teacher"
+          class="px-4 py-1 pl-10 border border-[#e9ecef] rounded-lg outline-none"
+        />
+        <fa-icon
+          size="sm"
+          [icon]="icon.faSearch"
+          class="absolute left-3 top-[50%] translate-y-[-50%] text-[#f66962]"
+        ></fa-icon>
+      </div>
+      <div>
+        <button
+          class="flex items-center gap-2 text-sm text-white bg-[#392c7d] px-4 py-1 rounded"
+        >
+          <span>Refresh List</span>
+        </button>
+      </div>
+    </div>
+    <table class="w-full mt-5">
+      <thead>
+        <tr>
+          <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">
+            <div class="flex items-center w-full h-full">
+              <input type="checkbox" class="w-4 h-4 mr-2" />
+            </div>
+          </th>
+          <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">Student</th>
+          <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">Status</th>
+          <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">Matricule</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="!sessionCourseService.fetching; else loader">
+        <tr
+          *ngFor="
+            let al of session?.attendance_lists || []
+              | paginate
+                : {
+                    itemsPerPage: pagination.itemsPerPage,
+                    currentPage: pagination.currentPage,
+                    totalItems: pagination.totalItems
+                  }
+          "
+          class="border-b border-gray-200 last:border-none"
+        >
+          <td class="text-[#22100d] py-4 px-1 text-left align-middle">
+            <div class="flex items-center w-full h-full">
+              <input type="checkbox" class="w-4 h-4 mr-2" />
+            </div>
+          </td>
+          <td class="text-[#22100d] py-4 px-1 text-left">
+            <div class="flex items-center w-full h-full">
+              <span class="inline-block w-8 h-8 rounded-full mr-2 bg-slate-400">
+              </span>
+              <div class="flex flex-col">
+                <span class="inline-block">
+                  {{ al.student.name }}
+                </span>
+                <span>
+                  {{ al.student.email }}
+                </span>
+              </div>
+            </div>
+          </td>
+          <td class="text-[#22100d] py-4 px-1 text-left pr-4">
+            <div class="flex gap-2">
+              <button
+                *ngIf="status.type != 'live'"
+                class="flex items-center gap-2 text-sm text-white bg-gray-600 px-3 py-1 rounded"
+              >
+                {{ al?.status ? "Present" : "Absent" }}
+              </button>
+            </div>
+          </td>
+          <td class="text-[#22100d] py-4 px-1 text-left pr-4">
+            {{ al?.student?.matricule }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="flex p-2 justify-center items-center mt-4">
+      <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
+    </div>
+  </div>
+
+  <!-- skeleton -->
+  <ng-template #loader>
+    <tbody>
+      <tr
+        *ngFor="let e of [].constructor(pagination.itemsPerPage)"
+        class="border-b border-gray-200 last:border-none"
+      >
+        <td class="align-middle h-[56.36px] px-1">
+          <span
+            class="inline-block animate-pulse w-4 h-[17px] rounded-sm bg-slate-500"
+          ></span>
+        </td>
+        <td class="align-middle h-[56.36px] px-1">
+          <span
+            class="inline-block animate-pulse w-48 h-[17px] rounded-sm bg-slate-500"
+          ></span>
+        </td>
+        <td class="align-middle h-[56.36px] px-1 text-left">
+          <span
+            class="inline-block animate-pulse w-16 h-[20px] rounded-sm bg-slate-500"
+          ></span>
+        </td>
+        <td class="align-middle h-[56.36px] px-1 text-left">
+          <span
+            class="inline-block animate-pulse w-36 h-[17px] rounded-sm bg-slate-500"
+          ></span>
+        </td>
+      </tr>
+    </tbody>
+  </ng-template>
+
+  <ng-template #session_loader>
+    <div class="mx-4">
+      <div class="card flex justify-between p-8">
+        <div class="flex flex-col gap-3 justify-between">
+          <div class="flex gap-2 flex-col">
+            <div class="h-7 w-64 bg-gray-600 animate-pulse rounded"></div>
+            <div class="h-5 w-64 bg-gray-600 animate-pulse rounded"></div>
+          </div>
+          <div class="flex gap-5">
+            <div class="h-6 w-20 bg-gray-600 animate-pulse rounded"></div>
+            <div class="h-6 w-20 bg-gray-600 animate-pulse rounded"></div>
+            <div class="h-6 w-20 bg-gray-600 animate-pulse rounded"></div>
+          </div>
+        </div>
+        <div>
+          <div class="h-6 w-36 bg-gray-600 animate-pulse rounded"></div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

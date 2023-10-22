@@ -7,6 +7,7 @@ use App\Traits\AppPermissionTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
@@ -55,12 +56,12 @@ class User extends Authenticatable
     {
         $user = User::where('matricule', $studentData['matricule'])->first();
 
-        if ($user && !$user->hasRole('student')) {
-            throw new \Exception('This matricule is already used by a teacher');
-        }
-
         if (!$user) {
             try {
+                if ($user->hasRole('student')) {
+                    throw new \Exception('This matricule is already used by a teacher');
+                }
+
                 $user = User::create([
                     'name' => $studentData['name'],
                     'email' => $studentData['email'],
@@ -82,6 +83,30 @@ class User extends Authenticatable
         }
 
         return $user;
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::created(function ($model) {
+            if (!request()->has('role')) return;
+
+            foreach (AppPermissionTrait::$ROLES as $key => $value) {
+                if ($value === request()->get('role')) {
+                    $model->assignRole($value);
+                    break;
+                }
+            }
+
+            if (request()->get('role') == AppPermissionTrait::$ROLES['PROFESSOR']) {
+                TeacherInfo::create([
+                    'user_id' => $model->id,
+                    'teacher_rank_id' => request()->get('rank'),
+                    'specialization_id' => request()->get('specialization'),
+                ]);
+            }
+        });
     }
 
     /**

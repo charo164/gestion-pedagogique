@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgSelectOption } from '@app/data/schemas/NgSelect';
+import { NgLibSelectOption } from '@app/data/schemas/NgSelect';
 import { ClasseService } from '@app/data/services/classe.service';
 import { ModuleService } from '@app/data/services/module.service';
 import { ScheduledCourseService } from '@app/data/services/scheduled-course.service';
@@ -34,9 +34,9 @@ export class RpAddScheduledCourseComponent implements OnInit {
     module_id: [null, [Validators.required]],
   });
 
-  public professors: NgSelectOption[] = [];
-  public modules: NgSelectOption[] = [];
-  public classes: NgSelectOption[] = [];
+  public professors: NgLibSelectOption[] = [];
+  public modules: NgLibSelectOption[] = [];
+  public classes: NgLibSelectOption[] = [];
 
   constructor(
     public scheduledCourseService: ScheduledCourseService,

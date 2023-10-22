@@ -116,8 +116,8 @@
             </div>
           </th>
           <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">Student</th>
+          <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">Status</th>
           <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">Matricule</th>
-          <th class="p-1 bg-[#f0f0f0] text-[#212529] text-left">Action</th>
         </tr>
       </thead>
       <tbody *ngIf="!sessionCourseService.fetching; else loader">
@@ -153,33 +153,20 @@
             </div>
           </td>
           <td class="text-[#22100d] py-4 px-1 text-left pr-4">
-            {{ al?.student?.matricule }}
-          </td>
-          <td class="text-[#22100d] py-4 px-1 text-left pr-4">
             <div class="flex gap-2">
               <button
-                *ngIf="!al?.status && status.type == 'live'"
-                (click)="validePresence(al.id.toString())"
-                class="flex items-center gap-2 text-sm text-white bg-[#392c7d] px-3 py-1 rounded"
-              >
-                <span>Valider</span>
-              </button>
-
-              <button
-                *ngIf="al?.status && status.type == 'live'"
-                (click)="validePresence(al.id.toString(), false)"
-                class="flex items-center gap-2 text-sm text-white bg-[#f66962] px-3 py-1 rounded"
-              >
-                <span>Annuler</span>
-              </button>
-
-              <button
                 *ngIf="status.type != 'live'"
-                class="flex items-center gap-2 text-sm text-white bg-gray-600 px-3 py-1 rounded"
+                [class]="
+                  'flex items-center gap-2 text-sm text-white px-3 py-1 rounded' +
+                  (al?.status ? ' bg-green-500' : ' bg-red-500')
+                "
               >
                 {{ al?.status ? "Present" : "Absent" }}
               </button>
             </div>
+          </td>
+          <td class="text-[#22100d] py-4 px-1 text-left pr-4">
+            {{ al?.student?.matricule }}
           </td>
         </tr>
       </tbody>
@@ -208,12 +195,12 @@
         </td>
         <td class="align-middle h-[56.36px] px-1 text-left">
           <span
-            class="inline-block animate-pulse w-36 h-[17px] rounded-sm bg-slate-500"
+            class="inline-block animate-pulse w-16 h-[20px] rounded-sm bg-slate-500"
           ></span>
         </td>
         <td class="align-middle h-[56.36px] px-1 text-left">
           <span
-            class="inline-block animate-pulse w-16 h-[20px] rounded-sm bg-slate-500"
+            class="inline-block animate-pulse w-36 h-[17px] rounded-sm bg-slate-500"
           ></span>
         </td>
       </tr>

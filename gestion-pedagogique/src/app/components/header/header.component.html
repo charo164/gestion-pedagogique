@@ -16,8 +16,13 @@
       size="lg"
       class="text-[#ff875a] hover:text-[#ff875a] cursor-pointer"
     ></fa-icon>
-    <div
-      class="w-12 h-12 border-2 border-[#e0e0e0] rounded-full bg-slate-100"
-    ></div>
+    <div class="w-12 h-12 border-2 overflow-hidden border-[#e0e0e0] rounded-full bg-slate-100">
+      <img
+        [src]="authService.user?.profile"
+        class="select-none w-full h-full"
+        draggable="false"
+        alt="avatar"
+      />
+    </div>
   </div>
 </header>

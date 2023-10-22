@@ -9,6 +9,16 @@ class TeacherInfo extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'teacher_rank_id',
+        'specialization_id',
+        'user_id',
+    ];
 
 
     public function rank()

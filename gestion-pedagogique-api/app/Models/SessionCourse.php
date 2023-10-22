@@ -20,7 +20,9 @@ class SessionCourse extends Model
         'scheduled_course_id',
         'classroom_id',
         'school_year_id',
-        'canceled'
+        'canceled',
+        'attache_id',
+        'updated_at'
     ];
 
     /**
@@ -132,6 +134,11 @@ class SessionCourse extends Model
         return $this->belongsTo(SchoolYear::class);
     }
 
+    public function attache()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function attendance_lists()
     {
         return $this->hasMany(AttendanceList::class);
@@ -164,6 +171,31 @@ class SessionCourse extends Model
             }, $inscriptions->toArray());
 
             AttendanceList::insert($al);
+        });
+
+        self::updated(function ($model) {
+            try {
+                // Update the scheduled_course hours
+                $scheduledCourse = ScheduledCourse::find($model->scheduled_course_id);
+
+                // create the attendance list
+                $classe = $scheduledCourse->classe;
+                $inscriptions = Inscription::where('classe_id', $classe->id)->get();
+
+                $al = array_map(function ($inscription) use ($model) {
+                    return [
+                        'user_id' => $inscription['user_id'],
+                        'session_course_id' => $model['id']
+                    ];
+                }, $inscriptions->toArray());
+
+                AttendanceList::insert($al);
+            } catch (\Throwable $th) {
+                Log::error($th->getMessage(), [
+                    'file' => $th->getFile(),
+                    'line' => $th->getLine()
+                ]);
+            }
         });
     }
 }

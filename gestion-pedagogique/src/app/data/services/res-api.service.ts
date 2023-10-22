@@ -61,6 +61,8 @@ export class ResApiService<T> {
   }
 
   create<R>(data: any, params?: Record<string, string | number>) {
+    if (this.updating) return of();
+
     this.updating = true;
     const school_year_id = localStorage.getItem('localSchoolYearId') || '';
     data = { ...data, school_year_id };
@@ -97,6 +99,8 @@ export class ResApiService<T> {
   }
 
   delete(id: string, params?: Record<string, string | number>) {
+    if (this.updating) return of();
+
     const school_year = localStorage.getItem('localSchoolYearId') || '';
     this.updating = true;
     return this.http
@@ -112,8 +116,9 @@ export class ResApiService<T> {
       );
   }
 
-  private handleError(error: any) {
-    console.error(error);
+  private handleError = (error: any) => {
+    this.fetching = false;
+    this.updating = false;
     return of({ error: true, message: error.error.message });
-  }
+  };
 }

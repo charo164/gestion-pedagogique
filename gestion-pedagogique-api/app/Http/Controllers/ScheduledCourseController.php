@@ -42,8 +42,8 @@ class ScheduledCourseController extends Controller
             $scheduledCourseQuery->where('classe_id', request()->query('classe'));
         }
 
-        if (request()->has('user') && request()->query('user') !== '') {
-            $scheduledCourseQuery->where('user_id', request()->query('user'));
+        if (request()->has('professor') && request()->query('professor') !== '') {
+            $scheduledCourseQuery->where('user_id', request()->query('professor'));
         }
 
         if (request()->has('type') && request()->query('type') !== '') {

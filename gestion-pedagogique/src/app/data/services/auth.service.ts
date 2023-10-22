@@ -43,8 +43,12 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('token');
-    this.user = null;
+    return this.http.post(`${environment.api}/auth/logout`, {}).pipe(
+      map((response: any) => {
+        this.user = null;
+        return response.data;
+      })
+    );
   }
 
   getToken() {

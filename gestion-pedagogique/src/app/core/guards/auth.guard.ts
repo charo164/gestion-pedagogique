@@ -14,6 +14,8 @@ export const authGuard: CanActivateFn = (route, state) => {
       if (user) {
         const route = getRoute(user.roles || [], state.url);
 
+        if (state.url === '/auth/logout') return true;
+
         if (authUrl.includes(state.url)) {
           router.navigate([route]);
           return false;
@@ -40,6 +42,14 @@ function getRoute(roles: string[], url: string) {
 
   if (roles.includes('rp')) {
     routes = url.startsWith('/rp') ? url : '/rp';
+  }
+
+  if (roles.includes('professor')) {
+    routes = url.startsWith('/professor') ? url : '/professor';
+  }
+
+  if (roles.includes('attache')) {
+    routes = url.startsWith('/attache') ? url : '/attache';
   }
 
   return routes;

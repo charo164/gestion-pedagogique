@@ -55,7 +55,6 @@ export class UserCardComponent implements OnInit {
           }
 
           this.selectedSchoolYearId = res.data.id;
-          console.log(this.selectedSchoolYearId)
         });
     });
   }

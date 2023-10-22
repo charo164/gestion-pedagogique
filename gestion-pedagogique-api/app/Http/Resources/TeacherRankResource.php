@@ -16,7 +16,7 @@ class TeacherRankResource extends AppJsonResource
     {
         return [
             'id' => $this->id,
-            'rank' => $this->rank,
+            'name' => $this->name,
         ];
     }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgSelectOption } from '@app/data/schemas/NgSelect';
+import { NgLibSelectOption } from '@app/data/schemas/NgSelect';
 import { ClasseService } from '@app/data/services/classe.service';
 import { ModuleService } from '@app/data/services/module.service';
 import {
@@ -35,14 +35,17 @@ export class RpAddSessionCourseComponent implements OnInit {
     start_date: ['', [Validators.required]],
     end_date: ['', [Validators.required]],
     classroom_id: [null, [Validators.required]],
+    attache_id: [null, [Validators.required]],
     scheduled_course_id: [null, [Validators.required]],
   });
 
-  public classrooms: NgSelectOption[] = [];
-  public scheduledCourses: NgSelectOption[] = [];
+  public classrooms: NgLibSelectOption[] = [];
+  public scheduledCourses: NgLibSelectOption[] = [];
+  public attaches: NgLibSelectOption[] = [];
   public selectedCourse: ScheduledCourse | null = null;
 
   constructor(
+    public userService: UserService,
     public scheduledCourseService: ScheduledCourseService,
     public classroomService: ClassroomService,
     public sessionCourseService: SessionCourseService,
@@ -52,7 +55,7 @@ export class RpAddSessionCourseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    smoothScrollTo()
+    smoothScrollTo();
     this.scheduledCourseService.getAll({}).subscribe((res) => {
       if ('error' in res) return;
 
@@ -70,6 +73,16 @@ export class RpAddSessionCourseComponent implements OnInit {
         id: classroom.id.toString(),
         name: classroom.name,
         displayName: classroom.name,
+      }));
+    });
+
+    this.userService.getAll({ role: 'attache' }).subscribe((res) => {
+      if ('error' in res) return;
+
+      this.attaches = res.data.map((user) => ({
+        id: user.id.toString(),
+        name: user.name,
+        displayName: user.name,
       }));
     });
   }
