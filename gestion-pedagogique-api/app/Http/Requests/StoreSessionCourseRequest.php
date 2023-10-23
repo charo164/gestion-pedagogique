@@ -39,8 +39,8 @@ class StoreSessionCourseRequest extends FormRequest
             'start_date' => ['required', 'date'],
             'end_date' => ['required', 'date'],
             'scheduled_course_id' => ['required', 'exists:scheduled_courses,id'],
-            'classroom_id' => ['required', 'exists:classrooms,id'],
             'attache_id' => ['required', 'exists:users,id', new IsAttache()],
+            'classroom_id' => ['sometimes', 'exists:classrooms,id'],
             'school_year_id' => ['sometimes', 'exists:school_years,id'],
         ];
     }

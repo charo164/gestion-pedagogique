@@ -6,12 +6,18 @@ import rpRoutes from './routes/rp.routes';
 import attacheRoutes from './routes/attache.routes';
 import { Page404Component } from './components/page404/page404.component';
 import { authGuard } from './core/guards/auth.guard';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 const routes: Routes = [
   ...authRoutes,
   ...rpRoutes,
   ...professorRoutes,
   ...attacheRoutes,
+  {
+    path: 'notifications',
+    component: NotificationsComponent,
+    canActivate: [authGuard],
+  },
   { path: '**', component: Page404Component, canActivate: [authGuard] },
 ];
 

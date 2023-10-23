@@ -18,7 +18,7 @@ return new class extends Migration
             $table->boolean('canceled')->default(false);
             $table->unsignedBigInteger('attache_id');
             $table->unsignedBigInteger('scheduled_course_id');
-            $table->unsignedBigInteger('classroom_id');
+            $table->unsignedBigInteger('classroom_id')->nullable();
             $table->unsignedBigInteger('school_year_id');
             $table->foreign('attache_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('scheduled_course_id')->references('id')->on('scheduled_courses')->onDelete('cascade');

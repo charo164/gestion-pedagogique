@@ -37,23 +37,7 @@
           class="px-5 py-2 w-full border border-[#babcbe] rounded-md outline-blue-500"
         />
       </div>
-      <div class="flex flex-col">
-        <label class="font-semibold text-sm mb-2" for="classroom_id">
-          Classroom
-          <span class="text-red-500">*</span>
-        </label>
-        <ng-select
-          id="classroom_id"
-          placeholder="Choose a classroom"
-          formControlName="classroom_id"
-        >
-          <ng-option
-            *ngFor="let classroom of classrooms"
-            [value]="classroom.id"
-            >{{ classroom.displayName }}</ng-option
-          >
-        </ng-select>
-      </div>
+
       <div class="flex flex-col">
         <label class="font-semibold text-sm mb-2" for="attache_id">
           Attache
@@ -64,16 +48,14 @@
           placeholder="Choose a attache"
           formControlName="attache_id"
         >
-          <ng-option
-            *ngFor="let attache of attaches"
-            [value]="attache.id"
-            >{{ attache.displayName }}</ng-option
-          >
+          <ng-option *ngFor="let attache of attaches" [value]="attache.id">{{
+            attache.displayName
+          }}</ng-option>
         </ng-select>
       </div>
       <div class="flex flex-col">
         <label class="font-semibold text-sm mb-2" for="scheduled_course_id">
-          Scheduled course ()
+          Scheduled course
           <span class="text-red-500">*</span>
         </label>
         <ng-select
@@ -85,6 +67,22 @@
             *ngFor="let scheduledCourse of scheduledCourses"
             [value]="scheduledCourse.id"
             >{{ scheduledCourse.displayName }}</ng-option
+          >
+        </ng-select>
+      </div>
+      <div class="flex flex-col">
+        <label class="font-semibold text-sm mb-2" for="classroom_id">
+          Classroom
+        </label>
+        <ng-select
+          id="classroom_id"
+          placeholder="Choose a classroom"
+          formControlName="classroom_id"
+        >
+          <ng-option
+            *ngFor="let classroom of classrooms"
+            [value]="classroom.id"
+            >{{ classroom.displayName }}</ng-option
           >
         </ng-select>
       </div>

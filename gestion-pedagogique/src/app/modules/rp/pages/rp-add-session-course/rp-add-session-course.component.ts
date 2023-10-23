@@ -34,7 +34,7 @@ export class RpAddSessionCourseComponent implements OnInit {
   public createSessionCourseForm = this.fb.group({
     start_date: ['', [Validators.required]],
     end_date: ['', [Validators.required]],
-    classroom_id: [null, [Validators.required]],
+    classroom_id: [null, []],
     attache_id: [null, [Validators.required]],
     scheduled_course_id: [null, [Validators.required]],
   });
@@ -88,7 +88,7 @@ export class RpAddSessionCourseComponent implements OnInit {
   }
 
   onCreateSessionCourse() {
-    const data = this.createSessionCourseForm.getRawValue();
+    let data = this.createSessionCourseForm.getRawValue();
     const startDate = new Date(data.start_date || '');
     const endDate = new Date(data.end_date || '');
 
@@ -96,6 +96,12 @@ export class RpAddSessionCourseComponent implements OnInit {
 
     data.start_date = startDate.toISOString().slice(0, 19).replace('T', ' ');
     data.end_date = endDate.toISOString().slice(0, 19).replace('T', ' ');
+
+    if (!data.classroom_id) {
+      const { classroom_id, ...otherData } = data;
+
+      data = otherData as any;
+    }
 
     this.sessionCourseService.create(data as any).subscribe((res) => {
       if ('error' in res) {

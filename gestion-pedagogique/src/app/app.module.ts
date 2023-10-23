@@ -23,6 +23,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { SharedModule } from './shared/shared.module';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     Page404Component,
     UserCardComponent,
     NavBarComponent,
+    NotificationsComponent,
   ],
   imports: [
     BrowserModule,
